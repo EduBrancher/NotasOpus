@@ -1,0 +1,2068 @@
+JavaScript
+
+strings created with `` allow injection of values with ${variable} as in BASH.
+
+in general the syntax available is similar to C++.
+
+conversion toString() is available as an object method.
+
+Special data
+
+undefined = undefined variable.
+accessing array where there is no value.
+is data type.
+
+null = never a default value (like undefined for variables that were never defined)
+used to set variables to a cleared state.
+
+NaN = Not a Number. Not a type. This is of type number (and is called not a number. good job js)
+this is the result of invalid calculations (0/0?)
+
+typeof Variable: returns the type of the variable Variable.
+
+script defer: downloads but waits for parse to end. Order is guaranteed.
+script async: downloads and executes immediately. Order is not guaranteed.
+
+defer and async cannot affect inline scripts, which are always executed immediately
+inline and sourced scripts also cannot be combined.
+
+JS control structures
+
+Comparing variables
+
+value equality == 
+not value equal !=
+value and type equality ===
+not value and type equal !==
+greater than, lesser than > < or equal >= <=
+not !
+
+if (condition) {
+    ...
+} else if () {
+    ...
+} else {
+    ...
+}
+
+AND is && 
+OR is ||
+
+object and array comparison
+
+{ name : 'Max' } === { name : 'Max' } is false (because they are different references, of course.)
+{ name : 'Max' } == { name : 'Max' } is false
+
+Falsy and Truthy (wtf)
+
+(when JS dynamically converts stuff to booleans because it is insane)
+(this happens when you take variables as conditions. Why would you do that? Don't be that lazy.)
+
+String:
+    empty: false
+    non-empty: true
+Number:
+    0: false
+    non-zero: true
+Objects:
+    always true (why)
+
+Ternary Operator (eh)
+
+const userName = isLogin ? 'Max' : null
+
+if isLogin, then userName receives 'Max', otherwise receives null.
+
+double !!:
+
+this coerces truthy and falsy to true and false.
+
+name = !!isName name gets true is isName is truthy, etc.
+
+assign with ||:
+
+name = someName || "none"
+
+if someName is false name receives "none" (WHY EVER WOULD YOU WRITE THIS WTF USE A TERNARY)
+
+name = isName && "Max"
+
+if isName, then name receives "Max", otherwise receives false (WHYYYYYYYYY)
+
+switch (value) {
+    case A:
+        ...
+        break;
+    case B:
+        ...
+        break;
+}
+
+if break is not given cases below a true case WILL BE EXECUTED.
+
+LOOPS
+
+for (let i = 0; i < 100, i++){
+    ...
+}
+
+for (const element of array){
+    ...
+}
+executes for every element in an array. element is the value, available in the for body.
+
+for (const key in object){
+    ...
+}
+executes for every field of an object. object is available in the loop. obj[key] is the value of the field. key is also available.
+
+while(condition){
+    ...
+}
+
+do {
+    ...
+} while (condition)
+
+break will break a loop, continue goes to the next iteration.
+
+Labeled Statement
+
+you can label a statement:
+
+MyForLoop: for (let i = 0; i < 10; i++){
+    ...
+}
+
+break MyForLoop will break the labeled loop.
+
+throw {define an error object here}
+
+try {
+    ...
+} catch(error) {
+    ...
+    error is available in this scope.
+} finally {
+    ...
+}
+finally always happens after try-catch (is always evaluated)
+
+
+block scope
+
+let and const exist in the block they are declared.
+
+var may only be declared in a function or global scope. Therefore, if var is not declared in a function it is global.
+
+'use strict'; this on the top of the file stops javascript from being too too crazy
+
+How does the browser execute javascript
+
+Heap - Long term memory.
+Stores data on system memory.
+memory is allocated to the browser by the OS.
+Functions are stored in the heap for example.
+
+Stack - short term memory.
+Manages program flow and execution Stack
+function references and program pointer.
+function parameters.
+Browser pushes instructions onto the stack.
+topmost item is always the thing that is 
+currently happening.
+a function context is stored in the stack.
+
+The Event loop
+A finished script may still be alive to allow
+user interaction. The Event Loop exists in the
+browser. This triggers a function call by the
+JS engine.
+
+Primitive and Reference values
+
+Primitives
+
+String Number Boolean null undefined Symbol
+
+Reference
+
+other Objects
+
+Advanced function concepts
+
+Function declaration vs Function expression
+
+function multiply(){
+
+}
+
+vs
+
+const multiply = function(){
+
+}
+
+function declaration can be anywhere in the file
+function expression must be declared before it is used
+
+anonymous Functions
+
+function(){
+
+}
+
+They can be defined in-place. The function will be executed
+after it is called if you add parentheses after the definition.
+
+Useful if you will never need the function and it must be passed
+to a method. Useful to assign a name still to clarify errors.
+
+Arrow Functions
+
+(a, b) => { body }
+
+equivalent to function(a, b){
+    body
+}
+
+only available when an anonymous function may be used
+
+if an arrow function has a single expression in it
+(say a ternary) you may omit the braces and the return statement.
+if there are no arguments parentheses are necessary
+if only one argument parentheses are not necessary
+more than one argument requires parentheses
+
+If the arrow function constructs an object as its single
+statement, the object {} must be wrapped in parentheses:
+(a, b) => ({obj})
+
+If you forget to pass a parameter to a function it is assigned
+to UNDEFINED! (because fuck logic)
+
+if undefined is passed to an argument that has a default value
+js will use the default value (only to undefined)
+
+to define default values:
+
+function(a, b = DEFAULT){
+    ...
+}
+
+due to the behaviour with lacking arguments it is best
+to leave defaulted arguments last, so they may be omitted
+without change in function behaviour.
+
+default argument expressions may refer to previous parameters
+in the function header.
+
+Rest operator
+
+function sumSeries(...numbers){
+
+}
+
+a function called like this will place all arguments into an array
+called numbers. A rest parameter must be the last parameter.
+There is also one and only one rest parameter.
+
+in all functions declared with function(), there is
+an available argument called arguments which is an array-like
+object that contains all parameters. This is deprecated in favor
+of the rest operator.
+
+functions may also be defined inside functions, of course.
+In that case they are only available in that scope.
+
+Callback functions
+are functions called for you by something else, such as the
+browser, when we create an Event Listener for some user 
+interaction for example.
+
+bind()
+syntax:
+
+myFunction.bind(this, arg)
+
+bind() creates a version of the function that has some of its parameters set.
+This is useful to create more general functions without a bunch of conditional
+logic. So, for example, if we use a function showResult(message, result),
+we can pass it as an argument as showResult.bind(this, "some message")
+to set its first parameter to "some message" (they are set in order.)
+This is useful for building generic functions and specializing them
+when they are called.
+
+call()
+discussed later
+
+
+apply()
+discussed later
+
+
+Document Object Model
+
+This is the document object that represents the rendered page and is made accessible
+to Javascript. The DOM is divided into element nodes and text nodes. Everything
+that is not constructed as an html element is bundled into a text node (including
+whitespace). Nodes are the object that make up the DOM. They are divided into many
+types, but the ones that matter are text nodes and element nodes.
+
+Elements are a type of node that exposes an API to interact with them.
+All HTML tags are element nodes.
+
+the document is the topmost object that represents the rendered html
+
+window is an object that more generally allows you to interact with the
+browser window. Document is a member of window, and it is treated as the
+standard namespace. The rendered document and the HTML text are not the same thing.
+Not all changes in one will be automatically updated in the other.
+
+you can access object members in a console by typing console.dir(object)
+
+document.getElementById(id) retrieves an HTML element by id.
+
+document.querySelector('text') is a css query on objects indexed by the tag text.
+CSS rules apply for text selection, so .text for class, #text for ID, and text
+without additions is a tag query. The function returns only the first match.
+
+querySelectorAll('text') is equivalent and returns all matches.
+
+Attributes and Properties
+attributes are html tags, for example. They are written in the .html code.
+Properties are the corresponding characteristics of the created JS objects.
+
+
+DOM traversal
+
+The DOM can be traversed by using, on one of the element nodes,
+the syntaxes
+element.parentElement, element.children,
+element.previousElementSibling, element.nextElementSibling
+
+Class-based styling
+
+To manipulate styling, we can create CSS style classes
+and then toggle those classes in a certain element as follows:
+
+element.classList.toggle('class')
+
+Creating elements in JS
+
+Use the createElement() method. Or create inner HTML.
+
+innerHTML
+
+innerHTML is a property of element nodes.
+
+section.innerHTML = 'HTML code'
+
+This replaces the nested structure with the HTML code.
+(quite brutal)
+
+to keep the existing HTML content we can use
+
+list.innerHTML = list.innerHTML + 'new HTML'
+This re-renders everything, which is not great for performance.
+this will also discard input values.
+
+you can use list.insertAdjacentHTML('new HTML')
+to specify the exact position of the insertion and preserve
+certain sections.
+
+createElement
+
+handle = document.createElement('tagname') 
+(always on the document!)
+the new element is returned.
+
+It is not inserted anywhere, so we would then do:
+list.appendChild(handle)
+handle.textContent = 'hey i'm new'
+
+list.append(handle or 'text')
+appends handle or text node to list.
+may use multiple arguments.
+
+prepend() adds before.
+
+before and after insert before and after the selected element.
+
+insertAdjacentElement is another option that has better support.
+
+replaceWith evidently replaces the selected element with the new
+one.
+
+if a given element is added elsewhere, it will be detached
+and added elsewhere.
+
+Copy element
+element.cloneNode() clones the node. 
+if the argument is false (default) the node is copied.
+if it is true, all descendants are also copied.
+
+Live node lists vs non Live
+querySelector returns a node list that is non-live:
+takes a snapshot of the DOM and if the DOM is updated,
+the snapshot is not. (NodeList)
+
+getElementBySomething will return HTMLCollections
+which are live lists: If the DOM is updated, the list
+is as well.
+
+Remove elements
+
+list.remove(); - removes from the DOM
+list.parentElement.removeChild(list) - also supported on IE
+
+Event Listeners
+Remember that DOM nodes are not deleted when scope changes
+as scope variables are! DOM nodes might need to be manually
+adjusted especially if they have event listeners attached to
+them which call non-idempotent operations!
+
+Arrays and Iterables
+
+Iterables are objects that implement the Iterable protocol
+and jave an @@iterator method i.e Symbol.iterator
+(you can use a for-of loop on them)
+
+Array-like
+has length and random access by index
+
+array creation methods
+const numbers = [1, 2, 3] //most common and recommended
+const moreNumbers = new Array() //empty
+const moreNumbers = new Array(1, 2, 3) //[1,2,3]
+const moreNumbers = new Array(5) //[     ] empty with length 5(WTF)
+
+new can be omitted
+
+const yetMoreNumbers = Array.of(1,2) // [1, 2]
+const usefulArrayCreation = Array.from(obj)
+
+Array.from converts an iterable or array like into an
+array (actually useful)
+
+   Array elements can be manipulated by index access
+   myArray[3] gets the 4th element
+   note: assigning value to an index beyond the array
+   length will cause the array to be stretched with
+   empty values up to that index (WTF WHY)
+
+   negative indexes may not be used to access in reverse
+
+
+
+
+what can be stored in arrays
+
+Numbers
+Strings
+Arrays
+Objects
+
+arrays are not restricted to some data type.
+You may mix them up.
+
+
+useful array functions
+
+push(obj) - append to end
+unshift(obj) - insert at start
+pop() removes and returns last element
+shift() removes and returns first element
+
+splice(startIndex, amount) - deletes amount of items
+starting from startIndex (this contracts the array)
+
+splice(startIndex, amount, ...items) - deletes amount of items
+starting from startIndex. The elements in items are added
+to the newly vacated array positions.
+
+splice(0) will clear the array
+splice(negative) will start from the right
+splice returns the removed elements.
+
+slice() - creates and returns a copy of the calling array.
+
+slice(startIndex, endIndex) - creates and returns a
+copy of the calling array, starting from startIndex and
+excluding endIndex
+
+if startIndex > endIndex returns empty
+
+if both indexes are negative it counts from the reverse
+if a single index is given it starts from the given index
+and copies everything else.
+
+concat(arg1, arg2...)
+add elements to the end of an array. elements are appended
+to a copy of the calling array, in order, and the new
+array is returns. args must be arrays.
+
+indexOf(item, opt)
+returns index of item. opt is an optional parameter that
+defines a starting index.
+
+lastIndexOf(item)
+returns last index of item (searches from the right)
+these functions do not work well for reference values
+(objects)
+
+find(comparison_function(object, index, array))
+executes comparison function on all elements in array
+it is expected to return true for the element we are
+looking for. If so, find returns the object. Not a copy.
+
+findIndex is the same as above, but instead of the obj,
+returns the index.
+
+includes(value)
+returns true or false if the value was found.
+
+forEach(function(element, index, array))
+iterates through elements on the array. Allows you
+to operate some function over all elements.
+
+map(function(element, index, array))
+function must return a new element of the array.
+transforms elements with function, and returns a new
+array with the transformed elements.
+
+sort()
+by default converts to string and sorts.
+sort(function(a,b))
+executes function on pairs of elements in the array.
+function must return 1 if a>b, 0 if a==b, -1 if a<b
+
+filter(function(element, index, array))
+return a new array with elements for which
+function returned true.
+
+reduce(function(prevValue, currentValue, index, array,)
+       startingValue)
+reduces an array to a value. returned value starts with
+startingValue, currentValue starts at the first element
+of the array. prevValue starts at startingValue.
+function must return the updated value for the iteration.
+prevValue after the first execution holds the previous
+return value, and currentValue the next element in the
+array.
+
+STRING METHODS
+
+split(separator)
+splits a string into array. string will be broken into
+elements wherever separator is encountered.
+
+join(separator) 
+is an array method to make a string from 
+elements. Separator is inserted between elements.
+
+const newArray = [...oldArray]
+
+copies oldArray to newArray. newArray is a new object.
+also useful for passing elements of an array as list
+of arguments to some function, say, Math.min(...arglist)
+objects(references) in the new array will be the same
+as those in the old array. (shallow copy)
+
+Array Destructuring
+converts an array into variables.
+const [var1, var2, var3, ... , ...rest] = array
+array elements will be added to var1, var2, in order.
+if rest is provided, remaining elements in the array
+that did not find a variable to be assigned to will
+be passed as a list into ...rest.
+
+JS also supports Sets and Maps (dictionaries)
+
+Sets
+Order not guaranteed, duplicates not allowed,
+no index based access
+
+Maps
+anything may be a key
+anything may be an object
+order is guaranteed
+duplicate keys are not allowed
+access values by keys
+
+Sets
+ids = new Set();
+
+can also be ids = new Set([iterable])
+which will create a set with the unique values in the
+iterable.
+
+set.add() adds a new entry.
+set.has(value) checks if the value is in set.
+set.entries() returns an iterable with the set elements.
+(returns the elements duplicated, so we access the elements
+    with entry[0])
+set.delete(value) removes a value if present.
+
+Maps
+
+Attach information to values.
+
+personData = new Map ([key, value])
+map.get(key) returns value attached to key
+map.entries returns an array of pairs: key and value.
+for (entry of map.entries()) or
+for ([key, value] of map.entries())
+
+
+WeakSets
+WeakSets may only store sets.
+WeakSets will garbage collect the data in them
+when the data is set to null. So use them when
+you may want to recycle data placed in the set.
+
+new WeakSet();
+
+It has less methods and utilities than sets.
+
+WeakMap is analogous.
+
+Objects
+
+syntax
+
+let name = {
+    key: value...
+}
+const person = {
+    name: 'Max',
+    age: 30,
+    hobbies: ['Sports', 'Cooking'],
+    greet: function(){
+        alert('Hi there!')
+    }
+}
+
+person.isAdmin = 'newly created field'
+console.log(person.isAdmin)
+
+delete person.isAdmin
+
+console.log(person.isAdmin)
+
+(keys may be strings, this language was designed by a psychopath)
+
+accessing values:
+obj.key or obj['key'] (keys may be a number, that is what an array is)
+
+to create an user defined key name:
+
+let name = {
+    [userDefinedKey]: value...
+}
+
+Object copying
+
+const person2 = { ...person }
+
+this copies all key-value pairs from person into person2.
+If the values are also references, however, the copy of those
+reference values is shallow.
+
+Object.assign(target, person)
+
+copies person into target. target can be an empty object
+{}. The new object is returned.
+
+Object Destructuring
+
+The same as array destruscturing.
+
+the in keyword
+
+if ('key' in movie){
+    //will run if there is a field with key 'key' in the object movie
+}
+
+the this keyword
+
+this refers to the caller context for a function.
+In general this will be an object that called the function
+as one of its methods.
+
+call(this, args...) arguments for a function. This is like
+bind but it executes the function right away. Call is used when
+we want to call a function and change what 'this' means
+
+apply is the same as call but instead of an arglist it passes
+an array.
+
+if 'this' is in a function set to an event listener.
+in this case 'this' refers to the triggering event.
+this is bound to the DOM element that triggered it.
+
+this and arrow functions
+in arrow functions, 'this' is not known. in them, this is unbound.
+arrow functions do not bind this to anything. so they keep outer scope.
+
+be careful when using this in a function as the standard behaviour
+may bind this to a global object with function()
+especially if the method calling the function is in global scope.
+
+Classes
+
+class MyClass {
+    myfield1 = defaultValue;
+    ...
+    constructor(args){
+        myfield1 = arg1;
+        ...
+    }
+}
+
+let MyObj = new MyClass(args)
+
+Static fields and methods
+
+defined with static keyword
+accessible on the class itself (class variables)
+
+Constructor Details
+
+Constructor Functions
+
+a class can be declared using function ClassName(args){
+    //construct the fields here (including member functions)
+}
+
+let myObject = new ClassName(args)
+
+this is old syntax compared to the 'class' syntax above.
+
+the 'new' keyword
+when a function is preceded by new in its call, new sets this = the object built in the function
+
+classes are syntactic sugar for constructor functions
+
+Prototypes
+
+JS is a prototype based language
+
+class is syntactic sugar for prototypes and constructor functions
+
+A prototype is a property of a constructor function that is assigned to every
+object said constructor function builds. So the Person function above
+has a Person.prototype that is assigned to all Persons built with its invocation.
+
+This is how inheritance is achieved in JS.
+
+Prototypes are pointers to potential scopes where a property or method which
+is not found directly might be found (in the superclasses).
+
+if something is not found after running a chain, undefined is returned (for property)
+or an error is returned (for a method)
+
+it is visible in a logged object by the property __proto__
+
+__proto__ is the pointer to the superclass.
+
+if logged with console.dir, an object may also display a prototype property.
+prototype is only visible in function objects. It is the prototype given to
+things created by this function using new.
+
+static methods and properties are added to the object which has the constructor
+function. The Object constructor function has a lot of static methods, and is
+not a fallback value to all objects. Rather, it is the prototype for all objects
+that have no prototype (not their __proto__!). In essence, Object is not an
+instantiable class, it is a constructor function. That means object methods
+are accessible to all objects, but NOT object properties.
+
+When using classes instead of constructor functions, javascript optimizes
+methods by adding methods declared in classes into the class prototype.
+This means a single method object is shared among all class instances.
+
+The previous behaviour may be obtained in classes by assigning functions
+to named fields in the class (field = function() {} ) or to the constructor.
+this is relevant if you may want to bind something to that particular object's
+method.
+
+Setting an object prototype to a new prototype with setPrototype(target, newProto)
+will add functionality, because the old prototype is still available as prototype
+of newProto
+
+To clear event listeners
+
+This is not built in in JS, so you can clone the node
+(element.cloneNode(true) for a deep copy) (remember that
+nodes contained inside of a node will be shallow copies)
+then element.replaceWith(clonedElement) -> this ditches connected
+event listeners (connected to element)
+
+More DOM things
+
+In a DOM element in JS, there is a dataset property that
+log all data- elements defined in the HTML. these are available
+as a stringmap.
+
+projectElement.dataset.property = 'value' -> this can be used
+to set data in the HTML element as well (from a JS script.)
+
+How items are positioned and how to get their coordinates.
+
+Useful commands to deal with coords:
+element.getBoundingClientRect() generates useful information about the object's boundaries
+element.offsetTop gives you the offset distance to the top from coordinate 0.
+
+element.clientTop gives you the distance between border and top of inner content
+
+element.scrollHeight is the total scrollable height of the content.
+scrollTop is the offset between scroll 0 and the current scroll
+
+all these properties are in MDN in the HTMLElement and Element articles
+document.documentElement.clientWidth
+returns the internal width of the visible window.
+
+These values are all read only, to change them you need to access
+the style property of the element:
+element.style.left = x + 'px'
+Important: this must be assigned in CSS syntax, hence
+the + 'px' for pixels.
+element.style.position = 'absolute' allows you to 
+arbitrarily change an element's positional coordinates.
+keep in mind that scroll values need to be considered.
+
+element.scrollTo(x, y) tells the element to scroll somewhere
+scrollBy(x, y) is relative.(scrollTo is idempotent)
+scrollIntoView({behaviour: 'smooth'}) does it with a nice
+animation.
+
+The <template></template>
+HTML headers can be used to create DOM nodes that are
+not rendered. (In HTML)
+document.importNode(element.content, true)
+pulls the content from an HTML document into javascript
+(true is for a deepcopy)
+
+document.createElement('script') can be used to create
+a JS script within another JS script. This can be useful
+to control when the browser loads a certain script.
+
+static startAnalytics(){
+    const analytics = document.createElement('script')
+    analytics.src = 'PATH TO SCRIPT'
+    analytics.defer = true
+    append to somewhere in DOM
+}
+
+BE CAREFUL WHEN RENDERING USER CREATED SCRIPTS!
+
+~ other nice features ~
+
+timers
+setTimeout(functionToExecuteWhenTimerStops, time(ms), array of function arguments to the first argument)
+setInterval() is the same, but with an interval
+(every time the time runs the function is called.)
+both functions return the timer id.
+we can then use clearTimeout(timerId)
+or clearInterval()
+
+location
+window.location
+related to the URL 
+location.href = link moves to link
+location.assign(link) does the same
+location.host is where the page is running
+location.origin the site
+location.pathname the path
+window.history gives you the history of pages
+visited. 
+
+navigator
+allows you to interact with browser and OS.
+navigator.clipboard to interact with clipboard
+navigator.geolocation.getCurrentPosition to find user position
+
+dates
+Date object for dates.
+new Date() will return a current date and time
+date is an object and has a bunch of
+useful methods.
+
+error
+Error is an object
+new Error('yikes') this can be thrown
+throw new Error('blah')
+Error includes a stacktrace so it is
+more useful. You can also add custom
+stuff for it is an object. it also has
+some useful properties to take a look at the stack
+
+Events
+
+Events are triggers to run code. Events can transport data.
+there is a core Event object and specialized Event objects.
+
+MDN -> events for the docs.
+
+Event Listeners
+
+We already have seen how to addEventListener('eventname', function)
+
+we can removeEventListener('eventname', function) as well.
+if you bind the target function and want to remove it later, you
+must store the bound function in a constant and add/remove the constant
+(to keep a handle on the bound function object's address)
+
+Events generate and package with them some data.
+the event function receives an event argument.
+then an event object will be passed to the relevant function, with
+many useful properties.
+
+the target property describes what caused the event. (the DOM element)
+and gives us direct access to it.
+useful event names
+
+'mouseenter' > mouse hovers over the button
+relatedTarget registers the previous div the cursor was on.
+'scroll' => check for scroll actions (for every scroll)
+useful event descriptors are available in MDN. (HTML element)
+
+some events do thing you do not want them to do. Say you send data
+to a server with a form. We might want to prevent the default submittion
+to validate the input.
+
+so if we have form.addEventListener('submit', f(event))
+
+we can call, in f, event.preventDefault() this prevents the browser
+from following default behaviour, allowing us to introduce our own logic.
+
+Capturing and Bubbling
+
+events in JS have 2 phases: bubbling and capturing.
+if we click a button, the browser runs through capturing then bubbling.
+capturing checks outside to inside in a given div, so checks for listerners
+in the div then in the button. bubbling is the opposite. Event Listeners
+are by default bubbled.
+
+third parameter for event listener true will make the event listener
+captured.
+
+this process is called event propagation, because an event is listenable
+on all ancestors (it "bubbles up")
+event.stopPropagation() will prevent this when called in the event function.
+stopImmediatePropagation() prevents all other event listeners on the same element.
+
+event propagation is very useful to save memory. For example, suppose w
+we have a list of items all with the same desired event. Then we add
+an event to the list, and use event.target in the function to get
+the particular list item clicked. This allows us to use a single listener
+for an entire list. (currentTarget will refer to the element that contains
+the event listener.)
+then with the event listener element DOM traversal can be used to find
+the relevant element. (with a list, maybe with event.target.closest('l))
+
+Triggering events programatically.
+
+When something happens we want to trigger some event in code.
+so we can do element.click() to simulate a click on a given element.
+Depending on the event a listener might be bypassed. Then we can click
+the specific location that has the eventListener (say a button) to simulate
+a mouse click on the button.
+
+This
+this on an event function points to the currentTarget of the event
+(the element that holds the eventListener.)
+
+
+Functions
+
+Pure Functions and side effects
+a pure function is a function that for a given input always produces
+the same effects and produces no changes outside of the function.
+
+pure functions are generally better than impure functions.
+
+factory functions
+
+A factory function is a function that produces another function.
+This is useful to generate closures where the function environment
+is defined.
+
+every function is a closure. (that is it closes over the calling
+environment, so a function keeps certain variables such as bound values.)
+
+Number and strings details
+
+the Number and Math global objects have interesting methods available.
+
+Strings
+
+methods available on MDN.
+
+template literals are very powerful.
+tagged templates:
+function that works with a template literal.
+function productDescription(strings, name, price){
+    
+}
+
+const productOutput = productDescription`product, ${name}, ${price}`;
+
+will call the function and pass in the template literal as 3 arguments.
+
+the string elements will be broken into an array. the dynamic segments
+will be passed as additional arguments in the order they appear.
+
+this can be useful to create output based on string input and
+replace some values in that input.
+
+thus we can dynamically generate text instead of an if-else block.
+(by accessing the string elements by indexes)
+
+RegEx
+
+new RegExp('pattern')
+
+Asynchronous JS
+
+JS is singlethreaded so it can only do one task at a time.
+
+However, some operations which involve timers and requests take a bit
+longer and would benefit from async execution.
+
+to do this, an operation is handed over to the browser, which has
+access to multiple threads. Operations are detached from JS code,
+and handled in multiple threads by the browser. Then callback functions
+are used by the browser to step back into the JS script with the
+response from the long operation.
+
+(by the way, this is what happens with event listeners)
+
+the event loop
+construct to deal with async code
+stuff that JS needs to do later is queued in a message queue
+The event loop consistently checks for empty stack and waiting
+things in the message queue. if so, then the message is moved
+into the stack to be executed.
+
+Promises
+
+code with callbacks nested into callbacks is called callback hell
+and is difficult to read.
+
+Promises exist to avoid callbacks. Instead of nesting callbacks,
+we use then => Function(){}, then => Function(){} to have a single
+level of callback.
+
+syntax
+ const setTimer = (duration) => {
+     const promise = new Promise((resolve, reject) => 
+     {setTimeout(() => {
+         resolve()
+     }, duration)
+     })
+     return promise
+ }
+ resolve will be reached when the timer defined by duration expired.
+ in that case, promise is executed. Afterward, when setTimer is used,
+    we can use the syntax setTimer(1000).then() => {} to execute
+    a function after the timer finishes, due to the returned promise
+
+const getPosition = (opts) => {
+    const promise = new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(success => {
+            resolve(success)
+        }, error => {
+            reject(error)
+        }, opts)
+    })
+    return promise
+}
+
+now
+let positionData 
+getPosition().then(posData => {
+    positionData = posData
+    return(setTimer()) -> a returned value is wrapped in a promise.
+    once that promises finishes the 'then' block chains forward.
+    }, err => {console.log(err)})
+    .then(data => {
+        console.log(data, positionData)
+    })
+can be
+called with the 'then' syntax.
+
+Promise error handling
+Errors must be passed down the promise chain.
+A promise that fails will be marked as failed.
+A then that is waiting for a failed promise
+executes the error second argument it is given.
+
+instead of a second argument to then, we can add a .catch block
+after the .then block. The catch block defines a function
+as the error case for the preceding .then block.
+.catch will, however, catch any errors that may have happened before,
+and will run. The second argument on .then is used only for the preceding
+block. Furthermore, catch does not cancel the promise chain, .then
+blocks after it will run. .catch skips all previous .then blocks.
+
+Async / Await
+
+async keyword is used before the function name. It causes a function
+to automatically return a promise. This gives us capacity to use
+the await keyword before any promise. 
+
+example
+
+async function trackUserHandler(){
+    let positionData;
+    const posData = await getPosition()
+    setTimer(2000) = await setTimer(2000)
+    //execution will wait for getPosition()
+    (this is syntactic sugar for then blocks)
+}
+much simpler! (but we lose error handling)
+
+to error handle async blocks, use try{} catch(error){
+
+}
+
+a disadvantage of async await is that the steps after the async
+await stuff will only execute after async await is finished, unlike
+with a then->catch, because async await wraps all the function into
+then blocks. To mitigate this, the simultaneous bits can be offloaded
+to another function that is kicked off simultaneously with the async function.
+async await must also be used only on functions, not on general code.
+
+Useful promise methods
+
+consider the
+
+getPosition()
+setTimer(1000)
+
+promises.
+
+We want to execute one of them, the fastest one.
+
+then Promise.race(funarr) can be called (pass the functions into
+the array)
+then it returns a promise with a result that is the result of the
+fastest function.
+
+suppose we want to wait for all of a set of promises to finish.
+
+Promise.all(funarr) returns a promise with all the data generated
+by the promises in the array (in corresponding positions)
+
+in promise.all, if one is rejected, it only gives an error.
+
+promise.allSettled(funarr) is like .all, but it waits for all functions
+to finish, succesfully or not. It will tell which were fulfilled.
+
+HTTP requests in JS
+
+Sending HTTP over JS
+
+new XMLHttpRequest() -> creates an http request object in JS.
+
+xhr.open('method', URL) to configure the request
+method like 'GET'
+xhr.send() sends the request. (check the network tab in dev tools)
+
+data is sent in JSON.
+
+xhr.onload = function() { //will be called upon receiving the response.
+    xhr.response has the response
+    const response = JSON.parse(xhr.response)
+    using xhr.responseType = 'json' parses automatically
+    for (const post of response) {
+        postEl = document.importNode(postTemplate.content, true) //deepcopy the content
+        postEl.querySelector('h2').textContent = post.title
+        postEl.querySelector('p').textContent = post.body
+    }
+}
+
+//more elegant alternative
+
+async function fetchPosts(){
+    const responseData = await sendHttpRequest('GET', https://jsonplaceholder.typicode.com/posts)
+}
+const listOfPosts = xhr.response
+for const post of listOfPosts {
+    postEl = document.importNode(postTemplate.content, true) //deepcopy the content
+        postEl.querySelector('h2').textContent = post.title
+        postEl.querySelector('p').textContent = post.body
+}
+
+fetchPosts()
+
+to send a post
+
+async function createPost(title, content){
+    const userId = Math.random()
+    const post = {
+        title: title,
+        body: content,
+        userId: userId
+    }
+    xhr.send(JSON.stringify(post)) 
+}
+remember to use preventDefault() on submit events to run your own code!
+
+for Http errors:
+xhr.onerror = function(){ (for network errors only!)
+    xhr.response has the response
+    xhr.status the error status
+}
+
+xhr.onload is the same, but for server side errors.
+
+fetch API (better!)
+
+fetch(URL) (sends a GET request) (this is promise based, so we don't
+have the headache).
+
+fetch returns a promise.
+fetch(URL).then(response => {return response.json()})
+response.text for text, response.blob for downloads
+
+fetch takes a second parameter, a javascript object that is used to
+configure the request.
+
+fetch(url, {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: {
+        //key-value pair
+        'Content-Type': 'application/json'
+    }
+})
+
+error handling in fetch
+requests that receive a response might not be taken as errors.
+(But they may be errors)
+
+return fetch(url, {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: {
+        //key-value pair
+        'Content-Type': 'application/json'
+    }
+}).then(response => {
+    if (response.status >= 200 && response.status < 300){
+        return response.json()
+    } else {
+        return response.json().then(errorData => {
+            console.log(errData)
+            throw new Error('Error server side')
+        })
+    }
+})
+
+with fetch, Form Data is very useful for form-like applications.
+
+Useful third party libs
+
+Lodash
+download the library and add to folder
+then in the html, before your script, add script src = "lodash.js"
+copy CDN link and toss it in the src (before your script)
+
+JQuery is used to interact with the DOM
+To discover libraries, we can take a look at google (really.)
+
+Axios
+a convenient library for http requests:
+
+const responseData = await axios.get(url)
+returns a promise
+(with ready to use data in response.data)
+technically successful responses throw errors if they are server-side errors'
+so we can just use try{
+    await axios...
+}
+catch(error){
+    error contains the error message.
+    (error.response will have the status)
+}
+
+Javascript Modules (Multi-File code)
+you can split files so you have single responsibility files and then
+import the files in dependency order, with the correct path, in the
+html. However there is a better way.
+
+when there is a dependency, we can import an object:
+
+NOTE: When modules are used, the scope for every file gets locked.
+To keep a certain class global, you need to prefix it with the 
+'export' keyword.
+
+You can then import the exported thing in another file, by using
+import {exported item, exported item...} from "./PATH_TO_FILE/File.js"
+(in the PATH_TO_FILE, you can go up one level by using ..)
+
+we need to add type="module" to the src script in the html file
+in all scripts that import/export stuff.
+
+To use modules, the page must be served, so npm-serve should be used.
+
+to import a bundle, use import * as namespace from ".PATH_TO_FILE/File.js"
+the objects must be accessed with namespace.object
+you can use as to rename imported things as well in the local scope.
+
+These are static imports that always take up bandwidth to obtain.
+If an import will not be used all the time, it makes sense to do
+a dynamic import instead.
+to do this, we simply use the normal import syntax and chain it with
+a promise: import "PATH/bar.js".then(module) => {
+    do stuff (namespace for the imported file is module,
+    so access foo with module.foo)
+}
+
+Global-scoped code in a module will run when the module is imported for
+the first time. the website window (accessed by the object name window
+in all modules) can be used to share data globally by attaching it to window.
+globalThis also points to a globally available object. it is an alias for window.
+it works in Node.js, while window does not.
+
+Useful JS tools.
+Devserver: webpack-dev-server
+Bundling Tool: webpack
+Optimize code: webpack optimizer
+Code Transpiler for Old Browser Support: Babel
+Code Quality: ESLint
+
+To initiate npm in a project, go to the project folder and run npm init in a terminal.
+
+npm install --save-dev package will install package as a dev
+dependency (will not be added to finished code)
+
+when dependencies are added to a project, they will be added
+to package.json. Then, when downloading a project, you can
+acquire its dependencies by running npm install, which will read
+from package.json. This enables us to avoid distributing auxiliary
+third party code.
+
+to install a development server, npm install --save-dev webpack-dev-server.
+this will automatically reload the webpage when changes are made to code.
+(create a build script for it!)
+
+to use webpack to bundle scrips, first make sure webpack and webpack-cli are installed
+Then webpack.config.js should be available. Here, we should configure exports
+webpack requires a configuration module, so add this there:
+
+const path = require('path')
+
+module.exports = {
+    entry: './src/app.js',
+    output: {
+        filename: 'app.js',
+        path: path.resolve(__dirname, 'assets', 'scripts') //generates path starting at our folder and adding assets and scripts to it
+        publicPath: 'assets/scripts/'
+    },
+    devtool: 'cheap-module-eval-source-map'
+}
+
+make sure to have your src scripts in the src folder. Then, add a script called
+'build': 'webpack' to your scripts in package.json. then do npm run build.
+
+to clear scripts folder after builds:
+npm install --save-dev clean-webpack-plugin
+
+To add third party packages with npm: npm install --save lodash
+
+Browser Storage
+data in browser storage may be manipulated by the user.
+
+webpages are served by a served and run in the browser.
+server can store data. (the important data, that must be 
+persisted and safeguarded.)
+
+browser information cannot be easily shared among users.
+session ID and other session related data are also kept in the broswr
+
+local storage and session storage:
+key value pairs. Basic user data and preferences.
+communicate with JS. localStorage is an available object
+in JS global scope. Objects must be stored with JSON.stringify(object)
+methods are lost, however. sessionStorage is also an object globally
+available. Session storage lives as long as the tab is active. if a
+reload happens it is lost. Local storage will always live unless cleared
+by user or browser.
+
+cookies
+also key-value pairs. Can be configured in a few special ways.
+Used for the same things as local storage. Accessible by
+javascript. Cookies may be sent to the server, allowing more complex
+communications. Access with document.cookie (accesses the entire cookie data store)
+document.cookie = 'key=value' adds a new pair. it will be overwritten
+if an equal key is given. Cookies require a server to be processed,
+so they will only be visible in served applications. object values may
+be kept with JSON.stringify() as well. cookie is actually a long string.
+const cookieData = document.cookie.split(';)
+data cookieData.map(i=>{return i.trim()}) will map the lines to array elements and remove whitespace
+then you have to deal with the element strings by splitting along the =.
+
+
+IndexedDB
+Server-side database. More complex data. Can be accessed by javascript.
+Client-side. Good for very complex data.
+indexedDB is available as a global object. indexedDB.open('databasename', 1)
+
+second argument is the version of the database.
+open will create a connection to the indexedDB.
+dbRequest = indexedDB.open(...)
+
+dbRequest.onupgradeneeded = function(event){
+
+    const db = event.target.result
+    objStore = db.createObjectStore('products', {keyPath:'id'}) args are name and key for every obj (primary key)
+    objStore.transaction.oncomplete = function(event){
+        //triggered once objstore creation finishes
+
+        prodStore = db.trnasaction('products', 'readwrite').objectStore('products')
+        prodStore.add({id: 'p1', other object fields})
+        if db is globally available,  and we need to run onupgradeneeded,
+        (use idb.js library)
+    }
+}
+dbRequest.onerror = function(event){
+    console.log('ERROR')
+}
+
+Browser Support
+
+where to lookup what browser supports which features
+on MDN documentations, there is a section to show which browsers
+support the feature.
+caniuse.com is similar.
+
+feature detection and fallbacks.
+check if a feature can be used, if not, run fallback code.
+we want to use navigadtor.clipboard. if it is not available, we get undefined.
+if it is undefined, it is falsy, and we can dodge the clipboard block
+and show some error message or offer alternative message.
+
+polyfills are packages that "teach" a browser to use some feature
+(they mimic it with older features and expose the modern API)
+you can look them up to force a package to be supported.
+Polyfills can be automatically detected and added.
+core-js can be imported to add really all features you might need.
+throwing in core-js can be costly (3MB). With core-js installed,
+babel can add only the polyfills that are needed, with useBuiltIns.
+
+if there is a core javascript feature missing, we need to transpile
+(const keyword for example). Babel is a transpiling tool that allows
+you to make modern code transpile to older JS that will run on an older
+browser.
+
+Frameworks
+"Macro-libraries" that add not only functionality, but also rules,
+to streamline code production.
+
+Meta-programming
+
+Symbols
+Symbols are a primite value. Every symbol is guaranteed to be unique.
+const uid = Symbol();
+object = {
+    [uid]: 1
+}
+[uid] cannot be overwritten nor is this particular symbol accessible
+by attempting to create a symbol with the same name. so this ensures
+some code safety in the [symbolname] key. (note that uid is also not
+exported).
+
+Well known symbols are used in some objects to provide interfaces.
+accessible by Symbol.symbolname
+
+Iterators
+an object may be made iterable by adding a next(){} method:
+next(){
+    if this.curEmployee >= this.employees.length
+        return {value: this.curEmployee, done: true}
+    const returnValue = {value: this.employees[this.curEmployee], done: false}
+    this.curEmployee++
+    return returnValue
+}
+
+Having a next() method makes an object loopable. adding
+[Symbol.iterator] to an object makes it iterable with for of loops.
+We use a generator for this: a generator is a function* name(){
+    let currentEmployee = 0;
+    while (currentEmployee < this.employees.length){
+        yield this.employees[currentEmployee];
+        currentEmployee++;
+    }
+    generator creates an object that has a next() method. when yield
+    is encountered, it pauses there and when executed again, resumes
+    at that point. if this generator is added as value to Symbol.iterator,
+    the object becomes iterable.
+}
+
+Reflect
+a globally available object that can manipulate other objects
+and make their properties non-writable, etc.
+
+Proxy
+a globally available object to manipulate operations.
+Create traps for operations. (interruptions that alter the use of an operation)
+Proxies point at some object in our code (this object goes into the constructor of the proxy)
+The second argument for the construction of a proxy is another object
+that has operation handlers, called traps.
+The names must be specific and are found in the Proxy documentation.
+For example, get(obj, propertyName){
+    console.log(propertyName)
+    return obj[propertyName]
+}
+this is a gatekeeper that handles attempts to obtain the property,
+with added functionality.
+This allows you to stop JS from returning undefined like an idiot.
+If the property is not found, you can return an actually useful error.
+
+Node.js
+
+javascript engine running disconnected from a browser.
+
+An advantage is, for example, interacting with the local
+filesystem.
+
+run .js apps via terminal with node appname.js
+
+functionalities need to be imported via modules.
+Core modules are documented in the node.js site.
+(API reference)
+
+to import a module:
+const moduleHandler = require('module name')
+
+then access the module things with moduleHandler.thingName
+
+for example, the filesystem module fs:
+
+fs.writefile('user_data.txt', 'username=Max', err => {
+    if (err) {
+        console.log('err')
+    }
+    else{
+        console.log('wrote to file')
+    }
+});
+
+will create a file named user_data.txt that contains the string
+'username=Max'.
+
+fs.readFile('filename', (err, data) => {
+    if (err) {
+        console.log(err)
+        return
+    }
+    else{
+        console.log(data)
+    }
+})
+
+Express.js is a useful framework to make working with server side js faster.
+It is necessary to use npm to pull express dependencies
+npm install express --save
+after it is downloaded, use const express = require('express') for the package.
+
+const app = express()
+app is an object with a bunch of features provided by express.
+
+Useful express packages:
+npm install body-parser --save (require('body-parser')) parse request body data
+
+express is based on using a series of functions on the express object
+that have a more convenient syntax.
+
+some useful functions:
+
+const app = require('express')
+app.use()
+
+if we are not done handling a response, we should use next() to tell
+express to go to the next app.use() instance.
+
+Other than creating HTML on server and sending to clients, we can also explore other
+options with express, like handling JSON data to build
+a RESTFUL service.
+
+To export a module using Node.js, use 
+module.exports = exportedObject
+
+suppose we want to post to a server A from our server B.
+
+using Node and express, do:
+fetch('http://serverA/targetRESTlink'), {
+    method: 'POST' (or other HTML method of interest),
+    body: JSON.stringify({
+        address: address,
+        name : name
+    }),
+    headers: {
+        'Content-Type': 'application/json'
+    }.then(response => {
+        //handle response
+        return response.json()
+    }).then(data => {
+        //handle data received
+    })
+    (use appropriate headers depending on what the bodyParser
+    is listening to on server A)
+}
+
+CORS: Cross Origin Resource Sharing
+
+page.com wants to talk to other.com. They are in different
+serers. We want to exchange resources between pages.
+Browsers will block resource requests that have different
+origins. Only requests within a domain are allowed.
+(for security reasons)
+
+We want to be able to tell the browser this is ok.
+This must be done using headers in the backend only.
+
+in the backend:
+
+app.use((request, response, next=> {
+    res.setHeader('Access-Control-Allow-Origin', 'desiredOrigin')
+    res.setHeader('Access-Control-Allow-Methods', 'desiredHTML methods' ('OPTIONS, POST, GET'...))
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, otherDesiredHeader, ...')
+}))
+OPTIONS must be allowed, as browsers use it to check if they have access and if it is not
+allowed this always fails by default.
+
+Linking to a database with Node and express
+(You can use a cloud service on mongoDB)
+
+JS Security
+
+How to write secure JS code
+
+Browser Side Security Details
+
+Your JS code is downloaded and ran in the browser
+Your code runs on the machine of the individuals that visit the
+page
+JS code may be read by the visitors
+BE CAREFUL with sensitive information
+any data that can be abused should not be in client side
+
+Most important security detail in client side:
+
+Cross Site Scripting Attacks (XSS)
+
+malicious JS code is injected to your app and executed
+So we could abuse a particular link by editing JS linked
+to its HTML elements then sharing that edited link.
+Be careful when using innerHTML or or allowing user-generated
+code to be ran as JS code with, say, onerror calls.
+package: sanitize-html. This attack pattern naturally 
+also can be used against servers, if the server executes
+the relevant code.
+
+Another way to suffer XSS attacks:
+Third party packages may be compromised and you will suffer
+from XSS attacks that exploit the package.
+
+XSS patterns are the most dangerous type of attack.
+
+Cross Site Request Forgery
+you click on a link that leads to a prepared page where
+your cookies are used to send a request to a normal page
+but then you automatically do something that you did not want to
+(injected content) to say, send money to someone else.
+
+A typical setup is when the backend of the banking app logs
+you in and creates a session object where it stores relevant
+data. The session ID is sent back to you (on the fronted) on a cookie. 
+This is a typical setup for many apps. You might be sending
+an intended request, like a money transfer. However, you might
+visit a fake site by accident and in this fake site, you send a
+request to the backend (and then the browser attaches cookies
+that belong to the backend, like the session ID, enabling
+your session to be hijacked)
+
+Deploying JS code
+
+you could deploy to a static host that does not execute JS locally
+or to a dynamic host that is capable of running JS there.
+
+Static Host
+powered by HTML, CSS, JS, and with static files.
+optimized for production deployment with webpack building.
+(this requires updating import names which can be cumbersome)
+(automate with HtmlWebpackPlugin)
+Firebase hosting is a place where such a site can be hosted.
+
+Dynamic Hosting
+
+Heroku is a recommended place to dynamically host a website.
+
+Powered by Node.js and databases along with the above
+
+JS Optimizations
+
+startup time vs runtime performance
+
+startup time: How long does it take to see something,
+how quickly can we interact with a page?
+
+How smooth does the application run, is there visual lag,
+do memory leaks get worse with time?
+
+CSS and HTML also play a role in efficiency.
+JS however is most likely the major factor.
+(the speed and config of the server will also impact)
+
+Optimization Potentials
+
+startup time:
+bundle/script size
+http roundtrips
+
+runtime
+optimize code execution, DOM access, memory leaks
+
+to start with we must measure for performance bottlenecks
+
+performance.now(), browser devtools, jsperf.com, webpagetest.com
+
+chrome devtools
+
+for the DOM
+elements tab
+chrome highlights all elements which change when something is
+done to the DOM
+
+Network tab shows HTML roundtrips
+
+you can disable cache and throttle the speed down in the
+network tab
+
+You can also do CPU throttling in the performance tab.
+you can also record performance and see a memory timeline.
+it will also show a breakdown of all that is done.
+
+memory tab can take snapshots and compare them to check for
+memory leak.
+
+You can also go to the audit tab to get a general report
+for the page's performance.
+
+google performance docs
+google devtool performance docs
+
+devtools sources can tell you what code is getting used.
+unused code initially can be loaded lazily.
+
+Updating the DOM correctly
+You can turn paint flashing on in the rendering tab in performance
+to flash whenever something is re-rendered.
+Be careful with your render functions especially if you call
+them after every change. You should not re-render everything.
+
+Use an updateRender(changed item) to render things after modifying them.
+this updateRender can, depending on the arguments, change only
+the parts of the dom that changed (and it should receive these)
+relevant arguments so it can rebuild the DOM correctly.
+
+when adding, create a new element in the update function
+and add it in the front of other elements.
+
+Small optimizations
+try not to override objects, instead modify their state, as 
+construction and memory access can be expensive.
+this also can add simplicity to code.
+
+also, when an element can be got instead of queried, the get
+functions are faster.
+
+Small optimizations might be dangerous.
+You don't need to optimize everything.
+they also might make code harder to understand.
+
+memory leaks
+take heap snapshots between operations.
+Detached elements are a clear signal of memory leaks.
+(retained references)
+
+Testing
+Unit tests : test an isolated piece of code.
+For input X, output must be Y.
+
+Integration Test: test integration of function A with function B.
+
+End to End test: simulate execution and check for expected result.
+
+testing setup
+
+Tools:
+Test Runner (Mocha)
+Assertion Library (Chai)
+(Jest does both)
+End to End: Headless Browser
+(puppeteer)
+jest --watch will make it run on builds automatically.
+
+testing on Async code
+to test async features, we use mocks. So we may guarantee
+a specific return without depending on another API.
+you can also mock the returns from third party library
+by creating a local file with the same name.
+
+Typescript
+
+an extension of JS (does not run in node, is compiled down to
+JS to run in the browser)
+
+Adds static types to javascript.
+
+install typescript compiler in typescriptlang.org
+
+npm install -g typescript
+
+include .ts scripts as .js scripts in the html
+tsc app.ts will convert app.ts to js code.
+
+type in function parameter: 
+function(a: number, b: number):return type
+
+type in variable:
+const myvar: number = 3
+
+types:
+number, string, boolean, object, void, any (placeholder type)
+
+type casting:
+
+as type after an operation that returns some object
+to interpret that object as type.
+
+dynamic object type:
+
+const myObj: {key: type} = {
+    obj...
+}
+the type must be furnished for every ket in the object.
+
+the same is true for arrays:
+
+let arr: {res: number}[] = []
+
+for an array of the object we defined above.
+
+for methods in objects:
+
+{res: number, print:(a:number) => void}
+
+for a function print(a:number): void in the object.
+
+you can define types like
+type MyType = {res: number, print:(a:number) => void}
+to make it cleaner.
+
+you can also use literal and union types.
+type PrintMode = 'console' | 'alert'
+
+enum type
+
+enum OutputMode { CONSOLE, ALERT }
+
+typescript class syntax
+
+class MyClass{
+    key: string
+    private key2: number
+    constructor(){
+        ...
+    }
+}
+
+interface MyInterface {
+    key: number
+    key(): void
+}
+
+allows us to define interfaces too.
+class MyClass implements MyInterface
+
+you can also use templated things:
+const results: Array<number> = []
+
+function logAndEcho<T>(val: T){
+
+}
+
+logAndEcho<string>('Hi there!').split(' ') -> allowed
+
+the typescript compiler
+
+tsc app.ts -w will make compiler watch for changes
+tsc --init will create a typescript config
+tsc will now compile all typescript files
+depending on what is set in the config file it may return
+new errors.
+
+Web Components (or custom element)
+
+Build custom HTML elements!
+
+when we define a web component in a .js file, we can import
+that file into html and use the custom tag of that element.
+
+Web components generate a shadow DOM so you can apply custom
+styling to them as well.
+
+custom elements can encapsulate logic and UI that may be
+reused effectively.
+
+a custom web component
+
+class Tooltip extends HTMLElement {
+    constructor(){
+        super()
+        this._tooltipContainer
+        this._tooltipText = 'dummy'
+        const template = document.querySelector('#desiredTemplate')
+        this.attachShadow({mode: 'open'})
+        this.shadowRoot.innerHTML = '
+            define a template here.
+            <style>
+                add styles, etc. (CSS)
+            </style>
+        '
+        ...
+    }
+
+    connectedCallback(){
+        const tooltipIcon = this.shadowRoot.querySelector('span')
+        this.appendChild(tooltipIcon)
+        tooltipIcon.addEventListener('mouseenter', this._showTooltip.bind(this))
+        tooltipIcon.addEventListener('mouseleave', this._hideTooltip.bind(this))
+        if (this.hasAttribute('text'){
+            this._tooltipText = this.getAttribute('text') //get text from html
+        }
+    }
+
+    _showTooltip() {
+        this.tooltipContainer = document.createElement('div')
+        this.tooltipContainer.textContent = 'Text'
+        this.appendChild(this.tooltipContainer)
+    }
+
+    _hideTooltip() {
+        this.removeChild(this._tooltipContainer)
+    }
+
+}
+
+customElements.define('my-html-tag', Tooltip);
+
+this will instantiate tooltip whenever browser finds
+the tag 'my-html-tag'
+
+we can append other html elements in the constructor:
+
+constructor(){
+    super()
+    
+}
+
+Web Component Lifecycle
+constructor()
+connectedCallback() -> access and initialize DOM
+disconnectedCallback() -> cleanup object
+attributeChangedCallback() -> update data when attributes change
+
+Styling a custom component
+
+You can create css classes for your components as normal.
+You can modify directly the style property of the object within js.
+
+Shadow DOM and Templates: the proper way to style custom web components
+
+Ideally the custom component has it's own DOM tree so the normal styling
+elements do not interfere with it.
+
+to attach a shadow DOM, in the constructor:
+this.attachShadow({mode: 'open'})
+
+to manipulate: this.shadowRoot.appendChild
+etc
+
+Templates: define the template in the js file so it is fully reusable.
+To do that, we define the template within the shadow DOM as inner HTML.
+Then it is reusable.
+
+Slots:
+<slot name=""></slot> used to slot in data in custom objects.
+Naming is optional but useful for scoping what slot does what things.
+
+to slot in a custom component in a normal tag, use <a is="custom-element"></a>
+
+to style slotted content, use the ::slotted('class'){
+    in the shadow DOM!
+}
+
+to style the element itself in the shadow DOM, use:
+
+:host(.condition){
+    //kinda like shadow DOM 'this' for styling.
+}
+for global styling drop (.condition):
+:host {
+    //no conditions
+}
+
+:host-context(p){
+    //is the same but p is a context that surrounds our custom element.
+}
+
+you can use --var() in styling to get css variables.
+
+react to changes in a custom object's attributes:
+
+attributeChangedCallback(name, oldValue, newValue){
+    if (oldValue === newValue)
+        return
+    if (name === 'text'){
+        this._tooltipText = newValue
+    }
+    etc.
+}
+
+for this callback to be triggered an attribute must be set as watched:
+
+add a class method:
+
+static get observedAttributes(){
+    ['attributeName1', 'attributeName2', ...]
+}
+
+the attributes in the array are now watched.
+
+
+Always clean up your stuff like event listeners to avoid memory leaks!
+
+disconnectedCallback(){
+    //is called when the object dies.
+    //do cleanup.
+    this._tooltipIcon.removeEventListener('mouseenter', _showTooltip)
+    this._tooltipIcon.removeEventListener('mouseleave', _showTooltip)
+}
+
+you can use dispatchEvent() to generate a new event during the handling of some other event.
+You can use bubbles: true for an internal event to trickle up. composed:true means the event may leave
+the shadow DOM. These allow components to be handled outside of the custom element.
+(we could use this.dispatchEvent too, for listeners on the custom element.)
+
+
+
+
+
+
+

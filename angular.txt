@@ -1,0 +1,396 @@
+Angular's goal is to allow developers to build web apps
+with less code. 
+
+Angular is written in typescript. 
+Angular uses RxJS to react to data changes
+
+Angular CLI platform is used to compile and build/serve
+alleviates boilerplate and wiring up
+
+building blocks of an angular app
+
+Modules
+Components
+Directives
+Pipes
+Services
+Router
+
+Module
+A module is a self related chunk of code.
+Used to separate app concerns.
+Can be made isolated (feature modules)
+or shared (shared modules)
+lazy loaded to optimize performance.
+
+Components
+Small unit of code that serves a single purpose.
+Takes data and renders through DOM to provide
+independent and isolated UI functionality.
+Used to make components reusable.
+Components can render other components
+
+Directives
+Add functionality to HTML or components
+Modify or generate elements and components
+built in and custom directives are available
+gateway to the DOM
+
+Pipes
+functions that transform data for rendering
+used inside components
+transform data to be bound before render
+pipe holds reusable logic
+(i e, date, currency, etc.)
+Built in and custom pipes available.
+
+Services
+used to obtain data
+(can be used for almost anything)
+but it is usually for non-component application tasks
+data fetching, state storage, http requests
+can provide other functionality as needes.
+services can be consumed by other services and components.
+always a singleton. They can be injected in other services.
+NEVER a new instance.
+
+Router
+in a traditional application routing is handled on the server.
+When a new page is responded to a request, a page reload will happen
+routers are abstractions that allow us to instruct angular
+to define URL and load components/modules
+abstracs read write access to the url state
+directives and api for navigation.
+we can intercept route changes to change data and update
+a page in real time.
+
+Component Architecture
+Components are the major building blocks of an application
+they must be built cleanly for an application to succeed
+components pass state and bind events to other components
+Encapsulate local state
+Parent and child communication
+Smart and Dumb components roles
+
+State
+Immutable state + state management
+app state is stored data over time
+state is often abstracted and managed by a store
+there can be a single or multiple state trees
+immutable data structures and update patterns
+Performance boost via identity checks (immutable)
+(NO INFINITELY DEEP DATA STRUCTURES!!)
+
+
+One-way Data Flow
+Describes the flow of state in the application
+intelligent rendering via property inputs
+Easier to track app state changes
+data only comes into a component via inputs
+when inputs change, comparison check is made by identity
+and a rerender can be made in optimal manner
+one way data flow provides with clear code intention
+and aids mental models.
+Passing data and hooking events up results in less code
+to maintain
+"data down, changes up"
+Avoid sharing references and mutating objects without
+first sending the change to the top of the component tree
+the top of the tree would be typically a smart container
+component. It would make the necessary state updates.
+When those finish processing we would allow state to tricke
+down to components and rerender where necessary.
+
+do not keep state across multiple components.
+it will be messy when an application scales.
+state is accessed by out root component and passed
+down to child components. the root is the smart container
+(the brain, so to speak) of the application.
+It then sends the state down to the components.
+
+Smart Container vs Dumb Components
+both are components
+
+smart components
+smart containers contain and wire up child components
+state travels in and out via services
+a smart container will grab a state from a service or store
+then pass it to dumb components
+they listen to dumb component events that indicate state
+needs to change.
+smart components are frequently used in routing.
+smart containers are the least reusable (tailored for
+specific purposes)
+grabs data and hooks it to dumb components
+
+dumb components
+renders HTML and state for presentation
+render dumb components in other dumb components
+state is given via input binding
+emits state change to smart container
+smart container passes it to a service for the state to
+change
+DUMB COMPONENTS ARE UNAWARE OF SERVICES
+THIS MAKES THEM REUSABLE
+(small, pure functions)
+Not used in routes. (TO MAKE THEM REUSABLE)
+
+Once a service processes a request it updates state
+and sends the state update to the smart container
+then an user interacts with some dumb component
+an event will trickle to the top, and be sent to the
+service, which may make an HTTP action
+then state is updated and trickles down
+
+data flows DOWN, events flow UP
+
+TypeScript refresher
+
+
+function ShoppingList() {
+    this.groceries = []
+
+}
+
+ShoppintList.prototype.addItem = function (item) {
+    this.groceries = this.groceries.concat(item)
+    //this is an immutable way to do this (as opposed to ush)
+}
+
+ShoppingList.prototype.removeItem = function (item) {
+    this.groceries = this.groceries.filter(
+        function (grocery){
+            return item !== grocery
+        }
+    )
+    //filter returns a new array so this is immutable
+}
+
+var myList = new ShoppingList()
+
+myList.addItem('banana')
+
+ES6 class
+
+class ShoppingList2 {
+    groceries: string[]
+
+    constructor(){
+        this.groceries = []
+    }
+
+    addItem(item) {
+        this.groceries = [...this.groceries, item]
+    }
+    removeItem(item) {
+        this.groceries = this.groceries.filter(
+            (grocery) => {
+                item !== grocery
+            }
+        )
+    }
+}
+
+const myNewList = new ShoppingList2()
+
+Imports and Exports
+
+the exported/imported things are called modules
+
+formatter.ts:
+function uppercase(str: string){
+    return str.toUpperCase()
+}
+
+main.ts:
+import {uppercase} from '/formatter'
+let myName: string = 'Todd'
+console.log(uppercase(myName))
+
+Component is a decorator that annotates a specific function
+The component decorator can be used against a class to tell angular
+specific metadata about the class
+Annotate components with
+@Component({
+    selector: 'app-root', -> this is to give it an HTML id
+    template: `
+        HTML for the template
+    `
+})
+to let Angular know we expect it to manage this component.
+
+The NgModule() decorator
+
+//lookup documentation
+
+PlatformBrowserDynamic
+
+//lookup documentation
+
+BrowserModule
+
+//lookup documentation
+
+CommonModule
+
+//lookup documentation
+
+The primary flow for initiating an angular project:
+
+Create a basic component, henceforth AppComponent. It should be
+an exported class in its app.component.ts file, and the class
+should be annotated with the @Component() decoration.
+Then the defined HTML in the decoration will be added to the HTML.
+
+Then, in the AppModule file, app.module.ts, import NgModule
+and annotate an exported class AppModule{} with the NgModule()
+decorator. This decorator will define the kinds of components
+the app will have and which imports will be made.
+
+Finally, in the main.ts file, import PlatformBrowserDynamic and
+AppModule, and call platformBrowserDynamic().bootstrapModule(AppModule)
+to bootstrap our modules onto the browser logic.
+
+Interpolation
+
+{{ syntax }} this allows angular to bind properties
+from a component into the template. syntax can actually
+be an expression.
+
+say we have as properties:
+numberOne: number = 1;
+numberTwo: number = 2;
+isHappy: boolean = true;
+
+then 
+{{ NumberOne }} will display the value 1, etc.
+{{ NumberOne + NumberTwo }} will display 3.
+{{ isHappy? ':)' : ':(' )}} etc.
+
+Property Binding
+
+What are the {{ }} actually doing? They are syntactic sugar.
+they set the innerHTML for the element. We can do the same
+in the template for angular: <h1 [innerHTML]="title"></h1>
+has the same effect as {{ title }}. Angular is looking up
+the JS properties (here innerHTML) and binding to them.
+<img [src]="logo"> for logo: string = 'img/logo.svg'
+the [src] is shorthand for element.src in native javascript.
+likewise,
+<input type="text" [value]="name">
+{{ name }} -> typing in input will NOT change name, because of one-way
+data flow.
+
+Event Binding
+
+For event binding, we use the syntax: (eventName) when we want to listen
+to some HTML event named by eventName. For example, we could have
+an input html field which listens to input events:
+<input 
+    type="text" 
+    [value]="name"
+    (input)="handleInput($event)"
+> NOTE THAT THIS IS WITHIN THE HTML <>
+In this case, whenever the user types something, handleInput will be
+called and the event consequences will move down along the tree,
+changing displayed data.
+
+Two-way Binding
+    you can listen to an event on some property
+    by using [propertyEventName] and then call
+    [(propertyEventName)] to run some event function
+    associated with that event.
+
+Template reference variables
+when some HTML field is marked with #variableName,
+that variableName is exported and available for use
+elsewhere, and bound to the field. for example:
+<input type="text" #username> will bind the input field
+with username variable, we can now access things like
+username.value elsewhere.
+
+ng instructions like ngFor and ngIf can be used within a template
+to perform a js task programatically in a component's template HTML.
+*ngFor="let passenger of passengers"
+*ngIf="name.length > 2"
+
+Dynamic styles. To add dynamic styles to list elements,
+use:
+
+<li *ngFor="let passenger of passengers; let i=index" >
+              <span
+                class="status"
+                [ngClass]="{ 'checked-in': passenger.checkedIn,
+                             'checked-out': !passenger.checkedIn }">
+              </span>
+              {{ i + 1}}: {{ passenger.name }}
+</li>
+
+you can also directly modify the [ngStyle] property
+(not recommended, not scalable)
+
+you can pipe in expressions {{ data | function }} to apply a function
+to the data.
+you can also use ternaries and other structures in the expression {{}}
+
+Operador de acesso safe:
+{{ passenger.children?.length || 0}} se children não existir não da problema.
+
+ngOnInit
+called when a component begins existing - safe initializer
+
+Components and State
+
+Container components should contain data and render
+stateless child components
+
+the @Input decorator is used over a variable in a 
+stateless child component to get the data from
+the smar component. 
+
+smart
+<passenger-count
+    [items]="passengers">
+</passenger-count>
+
+dumb
+@Input()
+export class PassengerCountComponent {
+  @Input()
+  items: Passenger[]
+  constructor() {}
+}
+items will now be available in template expressions
+in the dumb component's template.
+
+To emit events:
+
+We can create events like edit or remove and mark them as outputs.
+If we place an (edit) clause in the parent of our component,
+we can then emit these events (edit.emit). This will trigger an event 
+listener in the parent that can make changes to the data in accordance
+with the data model (smart component changes data, dumb component displays
+data) when an edit event is emitted from the child
+
+ngOnChanges
+
+this should be used to prevent data from updating as soon as a change is
+made. It detects changes and buffers them to make updates all at once.
+
+@Injectable()
+
+It is good for consistency to mark classes with injectable, if they have
+dependencies and they are not marked as such the application will crash.
+
+indexHTML
+
+<base href="/"> is required in indexHTML head.
+
+To update values in the database we must use a .subscribe orientation to the service:
+onUpdatePassenger(event: Passenger){
+    console.log(event)
+    this.passengerService.updatePassengers(event).subscribe((data:Passenger)=>{
+      this.passenger = Object.assign({}, this.passenger, event)
+    })
+  }
+  to update the database with changes to our passenger.

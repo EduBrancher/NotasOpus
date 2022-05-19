@@ -1,0 +1,186 @@
+What is git
+
+Git is a version control system
+Software designed to record changes made to file over time
+
+ability to revert and control version of files
+
+Compare changes made to files version by version and by whom
+
+Also useful for other areas like version control of an art piece
+
+Understanding how git manages data is the most important thing about git
+
+Consider a coffee shop owner that makes recipes. If he were to save recipes 
+and their modifications by saving text files with different names he would run into
+the problems:
+
+    - Impossible to recover from overwrites (unless his OS saves him)
+    - Impossible to merge files saved in different devices in a coherent single repo
+    (unless he uses the cloud)
+    - Git and Github or other hosting services offer these advantages in a single environment
+
+Three stages of a file
+
+Committed
+when a file is committed has it's data safely stored in the local database.
+When a committed file is changed it goes to modified state, meaning the file is 
+different from the last committed file
+
+Modified
+Modified but not committed
+
+Staged
+A file that is staged has it's changes finished and those changes have been declared
+as desirable to be committed in the next snapshot.
+
+These stages only apply to file that were in the last commit snapshot.
+
+Untracked files are not subject to these stages, as they have been added after the latest
+commit snapshot. Untracked files may simply be added to the staged state and registered in the
+next commit snapshot.
+
+Likewise, a git project is made of 3 major parts
+
+Working Directory
+Single copy (checkout) of one version of the project. Pulled from the local database
+in the .git directory
+
+Staging Area(index)
+Is conceptually between the other areas Stages changes for the next commit
+what is committed is only what is staged in the staging area
+changes will only be committed if they have been staged.
+
+.git directory(repository)
+origin of project data and pulled down from the remote server
+stores the metadata and object database for the project
+
+After changes are committed, they can be pushed to the .git repo to update origin data for the
+project.
+
+Files in the .git directory are committed and record
+Files in the staging area have been modified and slated to be staged in the next commit snapshot
+Changes to the working directory since last checkout have not yet been added to the staging
+area for commits.
+
+you can use man git for the full manual the most common commands are the porcelain commands
+rather than the low level commands (plumbing) you can shortcut by typing git help section
+(git help config). The second help option for quick reference is
+git -help (lists porcelain commands)
+
+basic commands
+
+a branch is a lightweight movable pointer to a project at a given point in time
+
+git log --patch for detailed commits
+git log --oneline for simplified
+
+General Commit Recommendations
+
+Separate Subject from body with blank line
+Limit subject line to 50 characters
+Capitalize subject line
+no period in subject line
+wrap the body 72 characters
+use the body to explain What was done and Why
+
+To remove a file tell git to stop tracking it
+git rm command 
+git rm file removes
+git rm file --cached stops tracking but keeps file
+
+to rename a file
+git mv oldname newname
+
+git HEAD
+HEAD is the name of the pointer that indicates the current point in time of a project.
+When a commit is done, HEAD moves forward in time.
+Head is the symbolic name for the commit we are working on top of currently.
+(While branch name is the symbolic name for the latest commit in that branch)
+We can move the HEAD around by using git checkout
+
+Branches
+Say you want to keep a putative recipes page. To keep these separate from the menu branch
+(as they are WIP) we might want to create a new branch. Branches in git are a simple movable
+reference to a given point in time (a given commit) in a project.
+git branch -f name HEAD will force a branch to move to the commit pointed by head.
+
+git checkout
+checkout to a different branch.
+git checkout -b name
+creates a new branch called name
+When we checkout to a branch, HEAD moves to that branch, as HEAD points to the current state
+we are on.
+When we commit on a branch those commits are linked to the branch unless explicitly changed.
+
+Branching allows us to test new ideas without interfering with others.
+git branch name creates a branch without checking out to it.
+
+Sometimes we may want to leave a WIP and go to another branch. in these cases, we need to
+stash changes to prevent them from being overwritten. After stashing, we may use
+git stash list and git stash show to see the stashed files in a branch. git stash pop
+retrieves an item in the stash.
+
+Merging a branch into another is a crucial step and intended end of a branch
+checkout to the branch that will RECEIVE the merge and type git merge branch
+where branch is the branch to be received.
+
+Reset a commit history
+git reset
+allows to move commits from history into working and staging area and can be used to throw changes
+away.
+NEVER reset after pushing because other people may be using the changes
+git reset --soft 
+moves a specific commit or commits into staging area
+git reset --mixed or no option
+moves commits to working dir
+git reset --hard throws stuff away
+(including wdir and staging area)
+
+git revert is like reset, but instead of changing the local working directory, it actually
+creates a new commit that reverses the reverted commit (for pushing to global repos)
+
+Git cherry pick takes a series of space-separated commits and puts them below head, in order.
+
+Git interactive rebase:
+git rebase -i will open a UI that shows what commits are about to be copied
+below the rebase
+
+Git Tags
+tags are a way to permanently mark some point in the history of development.
+They can be thought of as permanent branches, since branches often move around.
+Tags can be checked out to, but you can't commit on top of a tag - they detach the HEAD
+
+Git Remotes
+Remote repositories are copies of some git repository that are stored in the cloud.
+The remote repository is usually named origin, so the main branch in the cloned remote repository
+is conventionally named origin main
+
+Git fetch
+downloads the commits that the remote branch has and are missing from our local branch
+updates origin branch to point to the new last commit
+
+i e, brings the local representation of the remote repository (origin main, for example)
+in line with the actual remote repository.
+
+git fetch does NOT update your actual local work repository (say, main). It updates
+the local REPRESENTATION of your remote repository. You use other commands to pull from that
+representation into your actual local repository.
+
+fetching and merging remote changes is so common that the pull command does both at once
+
+Git pull
+
+
+
+Git Interactive
+comandos disponiveis no jogo
+
+commit
+branch
+checkout
+cherry-pick
+reset
+revert
+rebase
+merge

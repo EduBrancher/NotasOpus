@@ -1,0 +1,230 @@
+Maven
+
+Overview
+
+Maven is a build tool that composes an artifact (like a jar)
+
+helps to manage dependencies
+
+Project management tool to handle versioning of code.
+
+Produces javadocs
+
+externalizes settings so code is not dependent on environment
+
+centralizes archives used for dependencies.
+
+The file script is rather hermetic for it is based on a convention
+
+Maven folder structure
+
+By default maven looks for src/main/java, compiles to a target, and gets defaults and settings
+from pom.xml. (I'm not sure if this is true)
+
+src/main/java is where java code is stored. If we use packages, it builds the folder structure
+for the package below java. 
+src/test/java is used for unit test code.
+
+target is where everything is compiled. 
+
+POM can be divided in 4 basic parts
+<project>
+is the details for the project (name, version, groupID, etc)
+
+Dependencies are imported by naming convention
+you need groupId, artifactId, and version
+to add a dependency you just add it to the dependencies section of POM
+
+<dependencies>
+    <dependency>
+        <groupId>...</groupID>
+        <artifactId>...</artifactID>
+        etc
+
+goals for Maven
+clean deletes target and generated sources
+compile compiles the source code and generates file using libraries (in classes)
+package runs compile and runs unit tests. Then packages
+install runs package and installs the jar in the local repository. (default .m2)
+deploy runs install and deploys to corporate or remote repository.
+
+Overriding defaults
+
+Once we run compile all dependencies will be downloaded.
+
+overrides are placed in the build section 
+
+<build>
+    <finalName>foo<\finalName>
+    ...
+
+Maven Dependencies
+
+dependencies are other libraries we want in our application.
+Maven pulls dependencies of dependencies automatically.
+To call a dependency we need groupId, artifactId and version.
+
+<dependencies>
+    <dependency>
+        dependency identifier
+        ...
+
+Versions and SNAPSHOT
+
+SNAPSHOT versions are flagged to have any new code downloaded when they are compiled
+(for devs generally)
+
+Packaging types
+
+pom, jar, war, ear, rar, par, maven-plugin
+
+jar and the variants are glorified jar.
+
+pom types download all dependencies inside into an application.
+for example, a RESTful API pom for all dependencies used in RESTful APIs.
+
+Transitive Dependencies
+maven pulls all dependencies of dependencies.
+
+Scopes
+Compile is the default scope. All resources available everywhere in the application
+
+provided is like compile, artifact will be available throughout the build cycle (does not package)
+
+Runtime
+not needed for compilation, but needed for execution.
+
+Test
+Testing does nothing for execution, compiling or package, but is used in a test phase
+
+System
+do not use
+
+Import
+Dependency management
+
+Example
+<dependency>
+    <groupId>org.junit.jupiter</groupId>
+    <artifactId>junit-jupiter-engine</artifactId>
+    <version>5.0.2</version>
+</dependency>
+
+Repositories
+or repos
+
+Local repo
+Maven first looks for code in the local repo.
+When something is downloaded it is generally saved in /.m2
+
+http locations are usually left in the super pom.xml which comes by default
+default is repo.maven.apache.org
+
+Nexus and Artifactory are also useful repositories to know
+
+Dependency Repo
+Where we keep dependency downloads
+
+
+this is the syntax to add repositories in the xml
+<repositories>
+    <repository>
+        <id>
+        <name>
+        <url>
+        <snapshots><enabled> (bool)
+        <releases><enabled> (bool)
+        ...
+
+
+
+Plugin Repo
+Almost identical to a dependency repository, but stores plugin
+a plugin repository is just like a repository, except it's
+
+<pluginRepositories>
+<pluginRepository>
+...
+
+Plugins
+
+what maven uses to build and package applications and other things outside
+of downloading stuff
+
+Goals
+compile clean package are all goals (and these are plugins configured in the maven install)
+plugins may be reconfigured in a project pom to tweak what they do
+for example we would like to always clean when we compile
+<plugin>
+    <artifactId>maven-clean-plugin</artifactId>
+    <version>3.1.0</artifactId>
+    <executions>
+        <execution>
+        <id>clean</id>
+        <phase>clean</phase>
+        <goals>
+        <goal>clean</goal>
+        ...
+
+Phases
+events available in execution
+validate - check structure
+compile - compile source
+test - compile tests and run
+package - packages the code in the defined packaging
+integration-test - deploy and run integration tests
+verify - runs checks against project to verify integrity
+install - installs locally
+deploy - installs remotely
+
+Compiler Plugin
+Used to compile source
+invokes javac, but does more stuff
+defaults to super old java and should be customized (we have done it)
+can use fork, memory max, etc as configs
+overwrite source and target
+
+Jar
+Used to package code into a jar file.
+Usually tied to the package phase.
+Can change includes and excludes.
+Build manifest
+
+<artifact>maven-jar-plugin<
+<includes>
+    <include>**/*.xml<include> ** - go through all directories 
+
+    this adds all xmls
+
+
+Source
+Package source code
+Package phase
+slows down the build so usually tossed to later
+
+maven-source-plugin
+execution
+    goal jar
+    phase install
+
+
+Javadoc
+javadocs and patch them into a jar file
+browse the plugin to find additional configurations
+typically overridden to a later phase
+customize javadoc in the plugin configuration
+
+maven-javadoc-plugin
+
+automatically generates HTML documentation for the classes in the project.
+
+
+
+
+
+
+
+
+
+
+ 

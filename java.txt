@@ -1,0 +1,754 @@
+Values and Variables
+Java is strongly typed. So all variables must have a declared type that is
+non-convertible.
+
+Assignment is done with = and variables may have their value modified.
+
+Variables may be declared as local. A variable that is unassigned cannot have
+its value examined. Variables may be assigned to one another, and value will be
+transferred, not address.
+
+Primitive Data Types
+(built in)
+
+All other types must be made with the primitives, obviously.
+
+Integer
+Floating Point
+Character
+Boolean
+
+Integer have 4 different subtypes:
+byte (8 bits)
+short (16 bits)
+int (32 bits)
+long (64 bits) (must have a capital L at the end of value when assigning)
+
+Floating Point
+float requires an f at the end for assignment (32 bit)
+double requires a d (64 bit)
+
+Character (char)
+single unicode character. char is assigned with ''
+For unicode code points, use \u followed by 4 digit hex
+
+Boolean (bit)
+true and false
+
+Java primitives are stored by value. That means when we assign a var to another,
+the value is assigned. For primitives, areas of storage are allocated and assigned.
+This is also done when copying variables.
+
+Arithmetic Operators
+
+Basic
++*-/%
+
+Prefix/Posfix
+++ increment -- decrement
+++ prefix adds then returns
+suffix returns and increments
+
+Compund assignment
+apply result of right side to left side.
+
++=, *=, -=, etc.
+
+e.g myval += 3 -> myval receives myval + 3
+
+Available for 5 basic math operators.
+
+Operator Precedence(
+Postfix
+Prefix
+Multiplicative (modulus here)
+Additive
+left to right
+precedence may be overriden by parenthesis
+
+Type Conversion
+Implicit and Explicit 
+
+Explicit conversions done with the cast operator.
+int ival = (int) longval
+
+Widening conversions are automatic implicit (int to long eg.)
+Operations with long and float will be cast to float.
+
+
+Java Logic and Syntax peculiarities
+
+Relational Ops
+> < >= <= == != (false == false is true)
+
+conditional assignment (ternario)
+
+condition ? true-val ; false-val ; (horroroso)
+
+If-else
+
+If (a) {
+    blah
+}
+else if (b) {
+    else is optional
+}
+else {
+    else is optional
+}
+
+Block statements
+block statements {} represent a group of statements into a compound statement
+(for example, a series of commands in an if statement).
+
+Variables declared in a block are only visible within that block where 
+they are declared.
+
+Logical Operators
+
+And: & Or: | Exclusive or (XOR): ^ Negation: !
+
+Conditional and, conditional or
+
+only executes the right side if needed to determine the result (&& and ||)
+
+Arrays
+ordered collection of elements of the same type.
+
+float[] theVals = new float[3]; array of 3 floats.
+shorthand: float[] thevals = {3, 4, 5}
+
+number of elements can be obtained by varname.length
+
+for (float currentVal:theVals) {
+    list comprehension; currentVal receives the values in theVals
+}
+
+Switch
+
+transfer control to a statement based on a value
+
+switch (test-value (eg, iVal % 2)) {
+    case value-1:
+        statements
+        break
+    case value-2:
+        statements
+        break
+    .
+    .
+    .
+    default:
+        statements
+        break (good practice not required)
+}
+
+no break will cause all statements after match to be executed (even in other cases)
+
+Classes
+
+Java is OOP
+
+classes provide a structure for describing and creating objects
+
+class ClassName (usually put in a file named after ClassName)
+
+class Flight in Flight.java
+
+class Flight {
+
+}
+
+class is made by state and executable code
+
+Fields are variables that store object state
+
+methods manipulates state
+
+constructors execute code used during isntantiation of an object.
+
+to create a new object we must use the new keyword.
+
+new nyctosf = new Flight();
+
+classes are reference types. This means that copying a variable will clone the 
+reference.
+
+Encapsulation ad Access Modifiers.
+
+The internal representation of an object should be hidden under the methods.
+
+Access Modifiers
+
+no access modifier
+only visible within package
+
+public
+visible everywhere
+
+private
+visible only within its own class
+
+3 mechanisms to initialize state
+Field initializers
+Constructors
+    modifier ClassName(parameters for the constructor) {
+        !!No return type! not a method!
+    }
+    Classes may have multiple constructors, provided the parameter list is 
+    different.
+    Java will only provide default constructors if the class has no explicit
+    constructors.
+    A constructor may call another constructor by calling this(relevantParameters)
+    but the call must be the first line in the calling constructor
+    it makes sense to use then private modifiers for some constructors
+
+Initialization blocks (with code that can be shared accross constructors)
+    when we have code to be shared with all constructors, we take that code
+    and wrap it in brackets in the field scope. That code is now an initialization
+    block and will be executed at the start of every constructor. If we have
+    multiple, they are executed in order, top to bottom.
+
+Order: Field Initialization > Initialization Blocks > Constructor
+Take care your work in later stages does not overwrite previous ones.
+It is a good practice to initialize objects in some sort of minimally correct
+state.
+
+Parameters
+
+Parameters are passed by value. Changes will not be visible in greater scope.
+This is also valid for types that are references, not primitive values.
+However, if the values of the fields referenced within the method are swapped
+around, naturally the change will be visible outside, for we are working with true
+references. We did not change the reference, but we did change the object.
+A list of parameters of indetermined size may be passed by adding ... after the
+parameter type. You receive an automatically generated array. This may only be
+done to the last parameter in a method.
+
+Overloading
+
+A class may have the same method appearing with the same name multiple times, 
+given that they have different signatures. Like in constructors, we can call
+another method with the same name inside the method. Unlike constructors, this
+need not be in the first line, because it is just a regular method call.
+
+signature
+name number of parameters, parameter type
+
+Class inheritance
+
+Classes can inherit from another class. extends is the keyword.
+So if a class CargoFlight extends Flight, it is a peculiar subset of Flight.
+
+Instances of a derived class can be assigned to references of a base flight.
+But it loses the extended capabilities. The value of this is that an array
+of extended and base classes may be built (that is, a mixed-type array)
+
+If a derived class adds a field that is homonym to the base class, the base class
+field is hidden. This is due to Java's name resolution being an upward search
+up the inheritance tree. However, if we assign a derived class to an extended
+class variable (that is, that has the base class' type), the fields obtained
+will be those of the base class.
+
+Likewise with methods, if they are homonyms (same signature) the base class is
+overriden. But, unlike with hidden fields, if a method of an extended class is
+called on a variable whose type is the base class, the extended class overriding
+method is still used. This indicates that field resolution and method resolution
+are differently processed. In a nutshell, the method lookup is based on the
+type of object created (the constructor) and the field obtained is based on the 
+variable type.
+
+There are ways to make a method not-overridable.
+
+You may add a compiler flag @Override before a method to make the compiler
+check if you are actually overriding a method in the base class.
+
+The Object Class
+
+All classes inherits Object, the mother of all classes.
+
+Using the object class, you can create a reference that may point to anything.
+(Java's null pointer.) All classes extend Object.
+
+Like in C, you can use a specific cast to (CargoFlight) before the name of an 
+Object reference, to denullify the pointer and get your object back. It is possible
+to verify the type of something by the syntax
+
+if (o instaceof CargoFlight) {
+    ...
+}
+
+Object methods:
+clone
+hashCode
+getClass
+finalize
+toString
+equals
+
+Special Reference: super
+
+Like this, super is an implicit reference to the current object.
+super treats the object as an object of its superclass, that is, the class it is 
+extending. This is done to access overridden methods.
+
+Controlling Inheritance and Overriding.
+
+A class can determine extension and overriding.
+
+Final Classes
+
+public final class Passenger {
+    ...
+}
+final blocks extending a class.
+
+final can be added to a method to prevent it from being overridden.
+private methods also cannot be seen by an overriding class.
+
+You can also use abstract to require overriding or inheritance.
+
+public abstract boolean canAccept(Flight f);
+
+If any method is abstract, then the entire class must be abstract.
+That is because an implementation for some method must be provided,
+and so the class must be extended, it cannot exist as itself for it is 
+missing some functionality.
+
+Inheritance and Constructors
+Classes must always provide their constructors, these are not inherited.
+Furthermore, some constructor from the extended class must be called within the
+inheriting class' constructor (obviously). If this is not done explicitly, then
+the default no-argument constructor in the inherited class is used.
+
+use the super(parameters) to do this. It must be the first line of the new
+constructor.
+
+Classes and Advanced Data Types
+
+String
+
+Literals enclosed in double quotes ""
+
+Values can be concatenated with +
+
+Strings are immutable. To change a string a new string with the changes must be
+created.
+
+string methods
+length
+valueOf (convert 100 int to 100 string)
+concat, replace, toLowerCase, toUpperCase, trim, split
+format
+charAt, substring
+contains, endsWith, startsWith, indexOf, lastIndexOf
+compareTo, compareToIgnoreCase, isEmpty, equals
+
+string intern()
+
+When intern is called on a string value, the same reference will be returned.
+That is, if string1.intern is called and assigned to s2 and s3, s2 and s3 will
+be given the exact same reference to the string value of string1. This is similar
+to what is done with primitive types to allow quick comparison.
+
+the toString method
+
+This is used to get a string representation of a class. Provided by object,
+this must be overridden to obtain a proper print format for a class.
+
+StringBuilder
+
+provides a mutable string buffer.
+
+best performance with a pre-sized buffer.
+will grow automatically if capacity is extended (expensive)
+provides methods append and insert.
+
+capacity() -> allocated size
+length() -> actual used characters
+insert(pos, string) inserts string on position pos
+
+call StringBuilder.toString() to get the finalized string
+
+Classes vs. Primitives
+
+classes are rather expensive. Primitives are not treated as
+Objects, for efficiency. There are wrapper classes to treat
+primitives as classes, if we want class conveniences.
+
+primitive wrappers are immutable.
+
+Integer a = 100; a is a reference and 100 is a primitive.
+Java will assign correctly 100 to the class. Likewise,
+int b = a, a is a class. Java will "unwrap" the class automatically.
+
+Wrapper classes provide valueOf methods to box primitives into the class
+and xxxValue (intValue) to unbox.
+
+String to primitive:
+parseXXX
+
+String to wrapper:
+valueOf
+
+This is used to add primitives to a multi-type array for example,
+use Null references to primitives, (to check if something has been set)
+
+Wrapper classes provide members such as MAX_VAL, MIN_VAL, bitCount,
+binaryString, isInfinite, is NaN, isDigit, isLetter, etc.
+
+the doc has more functionalities.
+
+Wrapper Class Equality.
+comparison between wrappers is done by reference. so we need to use
+equals for equality.
+
+Final Fields
+These do not allow a field to be changed after it is set.
+Simple final fields must be set during object creation.
+
+Static Final Field:
+This is essentially a named constant that cannot be changed.
+
+Enumeration types
+enum keyword
+used to limit a type to a finite number of values.
+public enum FlightCrewJob {
+    Pilot, 
+    CoPilot,
+    FlightAttendant,
+    AirMarshal
+}
+
+FlightCrewJob can be used as a type now.
+
+FlightCrewJob.Pilot for example, to access pilot.
+
+Exceptions and error handling
+
+A program that crashes all the time is never going to be used
+but handling errors with error codes and flags is too awkward.
+
+Exceptions are a better way to deal with errors.
+
+try: contains the normal portion of the code
+if there is an exception, control is handed over to a catch block
+finally there is a finally block it always runs after a try or catch
+happens.
+
+BufferedReader reader = null;
+int total = 0;
+try{
+    reader = new BufferedReader(new FileReader("C:\\Numbers.txt"));
+    String line = null;
+    while ((line = reader.readLine()) != null)
+        total += Integer.valueOf(line);
+        System.out.println("Total: " + total);
+}
+catch (exception e){
+    System.out.println(e.getMessage());
+    program will continue running
+}
+finally{
+    try{
+        if (reader != null)
+            reader.close();
+    }
+    catch (exception e){
+        System.out.println(e.getMessage());
+    }
+}
+
+Each exception is actually an object, so they inherit from Object in a class hierarchy
+Throwable -> Exception -> RuntimeException -> NullPointerException/IOException
+
+Exceptions can be handled by type. A catch block may handle a type of exception.
+They are checked top to bottom, so we want to start with the more specific catch
+and then move to more general.
+
+BufferedReader reader = null;
+int total = 0;
+try{
+    reader = new BufferedReader(new FileReader("C:\\Numbers.txt"));
+    String line = null;
+    while ((line = reader.readLine()) != null)
+        total += Integer.valueOf(line);
+        System.out.println("Total: " + total);
+}
+catch (NumberFormatException e){
+    System.out.println("Invalid value...");
+    program will continue running
+}
+catch (FileNotFoundException e){
+    System.out.println("File not found.");
+}
+catch (IOexception e){
+    ...
+}
+finally{
+    try{
+        if (reader != null)
+            reader.close();
+    }
+    catch (exception e){
+        System.out.println(e.getMessage());
+    }
+}
+
+When a method throws an exception, and does not handle it, Java looks up the call stack to
+try and find some catch block that can capture the exception, so we say that exceptions
+propagate up the call stack. This is useful as we can centralize error handling in the calling
+method. However the method needs to use a throws clause to document that it may throw an 
+exception.
+
+public void addPassengers(String filename) throws IOException {
+
+}
+
+A finally may be added after a try without a catch (suppose we open a file but throw the
+exception instead of handling it. Then, we use finally to close the file and Java goes up the call
+stack to handle the exception).
+
+When you override a method, the throws clause of the overriding method must be compatible with
+the method being overridden.
+
+- Can exclude exceptions
+- Can have the same exception
+- Can have a derived exception
+
+This is to preserve code that uses the base class.
+
+To throw an exception, create the exception (it is an object) then use a throw command
+
+Most exception classes provide a constructor that accepts an exception, so you can add more
+information and wrap the original exception into a new thrown exception.
+
+In fact this is considered a very important practice and a fundamental constructor.
+
+Packages
+
+A package is a group of related types
+
+packages create namespaces and access boundaries
+they also act as a unit of distribution
+
+every source file identifies the associated package.
+
+package mypackage; as the first line of the source file.
+
+Package name is part of the type name
+
+types that are not in the default package and not in the current package do not need to be
+qualified. For other cases, we can use type imports.
+
+the import keyword
+mapping for the compiler to import types
+import com.pluralsight.travel.Flight; will tell the compiler that the final name in this
+composite command is to refer to the full path.
+
+Import on demand
+an alternative to the above, provides an import to a package
+
+import com.pluralsight.travel.*
+
+this imports everything in a package. This may cause name collisions.
+
+Package private
+
+Access Modifiers
+
+none - visible withing the package
+public - visible everywhere
+private - visible only within class
+protected - visible only within class and subclasses
+
+Packages provide an automated and standardized structure for distribution
+
+The folder structure can be put into an archive file, a jar file.
+It can include a manifest to identify startup classes and other stuff.
+Build automation systems like Maven also do it.
+
+Interfaces
+
+Interfaces define contracts.
+Interfaces never provide implementation. Classes implement interfaces.
+Class implements Interface
+Classes can do anything when they implement an interface, as long as they
+conform to the contract.
+
+Passenger implements Comparable
+java.lang.Comparable
+method: compareTo(Object o)
+receives item to compare with this instance
+negative return: this comes before
+positive: this comes after
+zero: they are equal in ordering
+
+if a class implements comparable then it may be used by methods that expect comparables
+such as array.sort().
+
+Some interfaces require additional type information. 
+generics 
+public interface Comparable<T> {
+    int compareTo(T o);
+}
+now we can use implements Comparable<Flight> and
+compareTo(Flight o) instead of Object o, so we don't need to cast stuff.
+
+The generic type passed does not need to be the same as the class.
+http://bit.ly/psjavagenerics
+
+Classes may implement multiple interfaces, although they may only extend one other class.
+to use for each we must implement the interface Iterable
+
+public interface Iterable<T>{
+    Iterator<T> iterator();
+}
+
+public interface Iterable<T>{
+    Iterator<T> iterator();
+}
+
+public interface Iterator<T> {
+    boolean hasNext();
+    T next();
+}
+
+Now we must create a class that implements Iterator.
+
+public class FlightIterator
+implements Iterator<Person>{
+    private CrewMember[] crew;
+    private Passenger[] roster;
+    private int index = 0;
+    public FlightIterator(
+        CrewMember[] crew, Passenger[] roster){
+            this.crew = crew;
+            this.roster = roster;
+        }
+        boolean hasNext(){
+            return index < (crew.length + roster.length);
+        }
+        public Person next(){
+            Person p = (index < crew.length) ?
+            crew[index] : roster[index - crew.length];
+            index++;
+            return p;
+        }
+        }
+    )
+}
+
+To declare an interface we use the interface keyword.
+Methods in an interface list name, parameters and return type
+Constants are typed named values and they are implicitly final static
+Interfaces may extend another interface. This implies respect to the base
+interface's contract.
+
+Static members, Nested Types, and Anonymous Classes
+
+Classes seen hitherto are classes with instance members, where values are associated with specific
+instances.
+
+Sometimes we want a class member that is available class wide. 
+Static members are class members not associated with any particular instance.
+Declared using the static keyword.
+static fields and methods are also like this.
+static methods are accessed using the class name.
+All instances access the same value for a static field.
+Likewise static methods are always the same for all instances, and for this reason they can only
+deal with static fields.
+
+Generally a good use for a static field are for global variables associated with the class
+(for example the amount of total customers in all current flights).
+
+Flight.resetAllPassengers(); for example.
+Static import may be used to access static members.
+import static com.pluralsight.flight.resetAllPassengers;
+
+Static initialization blocks perform one-time type initialization.
+Executed before type's first use.
+instance initialization blocks execute at the start of constructors,
+static initialization blocks execute before the type is used.
+
+how: 
+Enclosed in brackets outside of any method or constructor preceded with static keyword
+Cannot throw exceptions, must handle all in there.
+
+Sometimes there is no way to know which code will execute first. In these cases, it often
+is rewarding to have static initializers.
+
+FlightCrewJob.valueOf(parts[0]) -> how to get the value from an enum given a string
+(case must match)
+
+Nested type
+case when a type is declared within another type
+Classes can be declared within classes and interfaces (interfaces too!)
+
+Nested typed are members of the enclosing type, so it can see private members of the enclosing type
+(and may be public, private, protected (only accessible by classes that inherit from the enclosing
+class), etc)
+
+Nested types serve some different purposes
+    Structure and Scoping
+    In the case of a multi-valued attribute of a class, that may be enclosed in a nested class.
+    We set this to static to indicate that it is just for scoping and structure.
+    A field must be present in the nester class, declared correctly, etc.
+    If a nested class is public, it may be used with access to the enclosing class.
+    Passenger.RewardProgram platinum = new Passenger.RewardProgram();
+    Note that the nested class is thus naturally qualified by it's enclosing class.
+
+    Inner Class
+    Each instance of the nested class is associated with an instance of the enclosing class
+    nested classes without static keyword
+    Like moving a class' iterator inside itself.
+
+    Anonymous classes 
+        declared as part of their creation
+        useful for simple interface implementations or class extensions
+        are inner classes
+        create as if you are constructing an instance of the interface or base class
+        Place opening & closing brackets after the interface or base class
+        Place implementation code within the brackets.
+
+        for the iterator:
+            public Iterator<Person> iterator(){
+                return new Iterator<Person>() <- call constructor {
+                    #implement class here
+                }
+            }
+            instead of
+            private class FlightIterator() implements Iterator<Person>{
+                ...
+            }
+            this is more succint and useful for classes you are only using once.
+            Also avoids name collisions.
+
+for more:
+http://bit.ly/psjavaskill
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

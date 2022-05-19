@@ -1,0 +1,250 @@
+Relational Databases
+
+Codd's rules
+
+information is in table values only
+
+every value must be found with table name, column name and primary key
+
+existence of a dedicated NULL
+
+Existence of programatical language to manage database (such as SQL)
+
+CRUD capacity
+
+application must be isolated from the database
+
+data integrity must be logically encoded in database schema
+
+Database planning
+
+Creates a data model for a database
+
+Physical, Logical, Conceptual
+
+Conceptual is a map of the database. It can be made by hand on paper and represents
+ideally the data. It should use domain knowledge language
+
+Logical data model is database model that represents how the data will actually
+be stored with a view to a specific database technology. It should be implementation
+independent.
+
+A physical model is the exact implementation of the logical model for a given
+database specification. It may be equal to the logical model, but also may not.
+A physical data model is optimized for a given implementation.
+
+ER modeling
+
+Entity relationship modeling
+
+Possible to be understood by domain experts and administrative personnel
+
+easy to turn into logical design (a database may also be a source for ER)
+
+does not represent completely the model.
+
+Entities are abstract objects relevant to a context. They may represent anything
+from a snooker championship to the latest president of the US. Also called
+"instance" or "entity instance"
+
+Entity type or class:
+A class of entities. All presidents of the US are presidents of the US, although
+they may be different persons. Sometimes shortened (rather obtusely) to entity.
+
+Attributes
+an entity name may be an attribute. This is the core of the database, the actual
+data values.
+Instance level: fact about an entity instance
+
+Abstract level: class of facts about all entities of a class (like all presidents)
+
+Key attribute: A distinctive identifier that uniquely represents an entity instance.
+Keys may be multi-valued (a set of attributes). These are composite keys.
+An entity class may have many possible keys. All are candidate keys, and when one
+is chosen to be primary, the others are alternate.
+
+Relationships
+Entites relate to each other both in the instance level and the class level.
+"Dave plays in B league" relates a member to a league by a relationship "plays".
+plays is also an entity class that represents relationship instances.
+relationships have cardinalities, so while dave may only play in a league, a league
+may have any number of players.
+
+A child entity in such a relationship will contain a Foreign Key that represents
+the entity instance of the parent class in the modeled relationship.
+Relationships may also be optional or mandatory. A league must have 1 member at least
+(maybe 2).
+
+A relation line should be named in the parent's perspective. an inverse wording
+may be added to the child perspective.
+
+An identifying relationship contains the foreign key of some other entity class
+in its primary key. There must always, therefore, be a parent to be identifier.
+Such an entity class is called weak as it is dependent on another class. These
+are drawn with rounded corners.
+
+Normalization
+
+Markers that indicate a need for normalization are:
+
+Non-atomic values: This is the case when a single column stores multiple types
+of information. (say, an address column that includes street, city, house number,
+zip code?). In these cases, application code is required to split the values into
+atomic bits of information and this causes loss of performance.
+
+Redundancy: Same fact stored multiple times. This wastes space, causes performance
+impacts and increases the probability we have conflicting data. Storing derived
+facts is also a way to introduce conflicting truths.
+
+However, storing derived data may make sense for it may not always be possible
+to derive. Suppose a bank decides to derive balance from the transaction history:
+This is obviously an error, although the solution is to store derived data.
+
+normalizing is checking a series of steps and changing the design if it fails a step.
+
+Trying to normalize to 3rd normal form is proper and considered generally advantageous
+
+It is theoretically better to normalize in the ER diagram, but this is harder.
+
+Functional dependencies.
+a dependency is functional if for every input A, exactly one input B may be obtained.
+Attribute B depends on A.
+A is determinant of B, it's dependent attribute.
+they are not universal, depend on the universe.
+not always bijective.
+a functional dependency may be multi-parametered.
+supersets are always valid inputs for a functional dependency.
+A full dependency is one that cannot be further reduced from it's superset
+(it is the minimal set for which the dependency is valid)
+
+When derived attributes are found, beware that they may cause functional dependencies
+that have to be treated uniquely, or it may cause serious performance issues.
+(tax rate example.)
+tax amount is dependent on amount spent and tax rate. It is a derived attribute.
+However, using normal normalization techniques for it would cause a table
+to be created that lists tax amount for every possible combination of amount spend
+and tax rate in the database, which would be unusable.
+
+First Normal Form
+Table must have a key (that all atributes depend on)
+Every column stores atomic values.
+Note that even such a thing as full name: Dave Smith may not be atomic. If the
+application requires Full Name to be split into first and last names, this is not
+atomic. Fix is obvious.
+
+Repeating group: column stores multiple values instead of one. This again
+is not a violating depending on the application. Multiple similar columns may 
+also be a violation of first normal forms. This depends on application constraints.
+Repeating group patterns may be fixed by creating a new entity type, with 
+foreign keys for the holders of the data and the values along the key.
+This may be done also by multiple similar columns, but this is a very special case
+and usually a bad solution. Treat all candidate keys as equals and make sure they
+are minimal.
+    Finding a candidate key
+        An attribute is a candidate key if all other attributes depend on it
+        A set of attributes is a candidate key if it is not superset to another
+        candidate key and all other attributes depend on the combination or on a 
+        subset of it.
+        Multiple candidate keys are always mutually dependent.
+
+Finding funtional dependencies.
+
+Table with a column for each attribute.
+    For entity types: key and non key attrib (including foreign keys)
+    For many to many relationships: key attributes of connected entity types.
+First candidate key:
+    Entity types: key attributes.
+    Many to many relationships: key attribs of connected entities.
+
+Mark all candidate keys.
+All other columns depend on candidate keys.
+
+Verify that all candidate keys are minimal.
+Populate the table with 2 rows such that one of the key columns has 2 different
+values and all others are equal. If it turns out that this is not valid, then
+this changed key depends on the other key columns. 
+
+Check if keys are not missed. All attributes depend on candidate keys.
+We can never have rows with identical values for all candidate keys. So creating
+such an example is a proof that it is not a key. If an example cannot be created,
+then it is a candidate key.
+
+Find multi-column keys:
+Skip supersets of keys
+skip subsets of keys
+Two column possibilities:
+    two non key
+    non key + part of multi column key
+    parts of 2 multi column keys
+    be systematic like a for loop
+    the test is the same as single column keys described above.
+
+This has to be repeated for larger groups of columns.
+
+Alternatively, you can use the largest possible combination for which you do not
+expect to find a key and test that entire combination. If a valid example exists
+that has the same value for all the columns, then the combination is not a candidate
+key and no subsets of it will be a candidate key. This can be then reduced to eliminate
+subsets. It's also good to check if it is minimal.
+
+Second Normal Form:
+    First Normal Farm
+    Non-key attributes must not depend on subset of any candidate key
+        Non key attributes: Not part of ANY candidate key
+            If a table has no composite keys or no non-key attributes, if it is
+            in 1st normal form, it is in 2nd normal form.
+    If table NOT in second normal form:
+        create a new table that has the attributes in the offending dependency(both)
+        all dependents go on the table
+        The determinant attribute is a candidate key for this new table
+        You must check if the new entity violates 2nd normal form
+        remove the offending dependent attributes from the original table
+        the determinant stays and is foreign key for a new relationship.
+        Always one to many with new entity as parent.
+        If the composite key that the dependent belongs to is a primary key,
+        the relationship is identifying and the original entity becomes weak.
+        
+Once all keys are known to be minimal, it is time to systematically find functional
+dependencies. This includes violation of second normal form, and a few others.
+We only consider composite candidate keys. Skip this for tables with one candidate
+keys on all columns and keys with exactly one composite and no non-key columns this is
+also skipped.
+
+For the remaining tables this is executed for each composite key.
+Populate table with 2 rows, different values on the first column, different values
+on one other column that is not part of the current key and not a key column
+If impossible to create the pattern, the different column is dependent on the
+unchanging subset of the composite key. This indicates a normal dependency or
+derivation rule. make a note and continue. Once all columns are tested, we try this
+again for all other subsets of the composite key. If multiple dependencies are found
+within a key, we have to check if these are caused by a common subset.
+If we find a common subset with all supersets included, we create an example that
+repeats on that source subset, and different all over. If this is impossible, the
+dependent column is dependent on the tested subset and the dependencies on the
+superset are not full and can be discarded. If a non-key column depends on a 
+subset of a key, you have to remove it with the rule above.
+
+Third Normal Form:
+    Second Normal Form
+    No dependency of non-key attribute on attributes that are not a key
+    Fix: Create new artificial entity type for all atributes offending, the
+    determinant is primary key, remove dependents from original, determinant
+    creates a foreign key to a new relationship.
+
+    To check:
+    Dependency on non-key attribute: populate with pattern that is equal in first
+    column that is not key, if a valid example is created, then no attribute depends
+    on this column. Look for all dependent columns. 
+
+    Create new entity type with all involved attributes, remove dependents, leave
+    determinant as foreign key. 
+
+    After, repeat for non-key columns. You should usually use assumptions to prevent
+    silly tests.
+
+    Every non-key attribute must provide a fact about the key(1st), 
+    the whole key(2nd), and nothing but the key(3rd).
+
+
+
+

@@ -1,0 +1,190 @@
+
+1 O que é o scrum?
+
+Um metodo para desenvolver um projeto de forma agil. Aplicado aqui a TI.
+
+Agilidade
+
+O que é agilidade?
+
+agilidade é adaptar-se para entregar com maior frequência o maior valor.
+Agilidade é jogo de cintura e esquiva, focar no essencial, perceber rápido
+a prioridade e seguir a prioridade real.
+
+O manifesto agil
+
+Software evolui. Logo individuos que o produzem e o funcionamento
+do software adequado ao cliente sao cruciais. Responder à mudanças (adaptar-se)
+é crucial para agilidade.
+
+1 satisfazer o cliente com entrega continua e valor agregado.
+2 mudanças nos requisitos sao bem-vindas. O importante é gerar valor.
+3 Entregar frequentemente para que possamos falhar mais cedo e atualizar a expectativa de valor
+4 Pessoas do negócio e desenvolvedores tem que interagir diariamente.
+5 Construa projetos com indivíduos motivados. Confie neles para trabalhar.
+6 Conversa face to face.
+7 Software funcionando é a medida primária de progresso.
+8 Desenvolvimento sustentável. O ritmo deve ser possível de ser mantido.
+9 Continua atenção ao design e técnica torna o projeto mais ágil. 
+10 Simplicidade: Maximize o trabalho não realizado. Foque nas prioridades para hoje.
+11 As melhores arquiteturas emergem de equipes auto-organizáveis.
+12 Reflexão regular sobre o processo interna da equipe.
+
+O próximo maior valor é crucial para a noção de agilidade. Entregar sempre o 
+mais importante no momento atual.
+
+Por que ser agil?
+
+O ciclo do scrum
+
+Scrum vem do futebol (americano). Quando os times se amarram para tomar a bola
+
+scrum é um framework para problemas complexos e entregar o maior valor possível.
+
+Transparencia, Inspeção, Adaptação.
+
+A equipe deve ser capaz de visualizar o andamento do projeto, analisar problemas
+específicos e determinar mudanças necessárias. Todo membro da equipe.
+
+Scrum Master é o organizador
+
+Product Owner é o arquiteto e liaison com o cliente.
+
+Development Team são os desenvolvedores mesmo
+
+Esses todos são membros do time de scrum. Não ha uma hierarquia explicita entre
+eles.
+
+O ciclo do scrum
+
+Backlog - trabalho remanescente. Quando o product owner obtem informação
+do cliente, ele traduz essa informação em tarefas isoladas em itens.
+
+O ciclo do scrum funciona em sprints. Cada sprint tem tempo fixo onde o Backlog
+é trabalhado. O comum na Opus é 3 semanas e as entregas então são a cada 3 sema-
+nas. O backlog pode mudar pois o projeto evolui. A ideia é entregar em cada 
+período o conjunto de maior valor. 
+
+Em todo dia de trabalho tem um daily scrum. A equipe se encontra pra discutir
+o estado atual do desenvolvimento. Isso serve para garantir a agilidade, pois
+se um item mudar de complexidade isso pode ser adaptado, e transparencia pode
+ser mantida. Isso ajuda a compartilhar conhecimento entre a equipe.
+
+O sprint termina com duas reunioes, uma de review onde se apresenta o que foi
+produzido e uma retrospectiva da equipe que define o que pode melhorar no 
+sprint. É isso que faz da equipe auto organizavel. Todo sprint termina também
+com algo entregável. 
+
+O sprint tem tempo fixo. Outras cerimônias que podem acontecer são a de
+grooming (para refinar o backlog) e comemorações. Todo o time de scrum participa
+do planning. 
+
+Na daily o Product Owner pode não ir, mas é melhor que vá. 
+O time deve falar:
+    O que fiz desde a ultima reuniao
+    O que estou fazendo agora
+    Tem algo me impedindo de trabalhar
+Isso é importante para o scrum master agir como facilitador e as vezes pedir
+mais recursos.
+
+Na sprint review todo mundo vai, até o cliente. Nessa reunião o crucial é mostrar
+o trabalho realizado. É muito comum o cliente adicionar coisas nos requerimentos.
+Queremos saber a opinião do cliente e seu input para decidir como entregar o 
+máximo valor no próximo sprint.
+
+Retrospectiva.
+
+Todos participam (talvez não o cliente). É importante identificar o que deu 
+errado e certo para garantir que o processo de desenvolvimento continue saudável.
+
+Itens ready: Que estao prontos para ir pro backlog.
+
+Itens done: Que podem estar na iteração entregável.
+
+Os critérios de ready e done são definidos pelo time projeto a projeto.
+
+Todo elemento do ciclo de scrum é importante e deve ser respeitado. O incremento
+entregável é uma unidade de valor que é entregue ao cliente. É normal não completar
+o trabalho estimado. O time ganha maturidade pra estimar ao longo do processo.
+
+Por quê ser ágil?
+
+O método tradicional tem um intervalo de tempo enorme até a entrega. 
+Um ciclo longo de desenvolvimento não é adaptável. A metodologia tradicional de
+planejamento faz menos sentido que software porque software é fácil de mudar,
+e é menos claro o que se deseja de um software pois softwares evoluem.
+
+No scrum se prioriza a entrega de uma unidade de valor máximo. No método ágil,
+o escopo do projeto pode mudar o quanto se deseja. 
+
+Papéis do scrum
+
+Scrum Master é o facilitador do trabalho do time. Ensina scrum, remove problemas,
+e organiza o scrum e mantém o ciclo rodando. Ele busca mais recursos para a equipe
+também.
+
+Product Owner define o produto para maximizar o valor ao cliente. Traduz o desejo
+em especificações. Único que pode modificar o backlog.
+
+Time de desenvolvimento desenvolve o produto. Capaz de gerar o produto de ponta
+a ponta. Auto organizada e transforma a especificação em programa. Ajuda a
+definir o backlog e ajuda o PO na priorização. Os testadores também fazem parte
+do time.
+
+O Backlog
+
+Product Backlog - Backlog do produto. Gerado pelo PO
+
+Sprint backlog - backlog do sprint atual. Resultado do planning
+
+No backlog, os itens de alta prioridade devem ser detalhados para facilitar o
+trabalho do time. Um item detalhado pode ser quebrado em sub-itens que são
+fáceis de executar.
+
+"No task is too difficult if it can be broken into small enough parts"
+- Ford
+
+Burndown
+
+O gráfico de burndown avalia quanto tempo ainda tem para ser feito sobre
+o tempo remanescente na iteração. Serve para definir estimativas e a entrega
+que vai ser feita. 
+
+User story:
+
+Representa os objetivos do usuário e como o sistema deve se comportar para
+alcançar os objetivos.
+
+Exemplo:
+Eu, comprador, gostaria de pesquisar produto por titulo, para decidir o que vou
+comprar.
+
+Scrum na Opus
+Se uma metodologia é agil, ela deve ser ágil recursivamente. Pode-se mudar a
+metodologia.
+Todos devem comprar a metodologia agil, inclusive o cliente. Às vezes o cliente
+tem mentalidade de cascata. 
+
+Na Opus geralmente o scrum master é o gerente e o cliente faz as partes de PO.
+O scrum é utilizado como base estrutural do ciclo mas os papéis da equipe não
+são rigorosamente seguidos.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

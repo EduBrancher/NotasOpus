@@ -1,0 +1,100 @@
+Example
+
+you work for an ice cream shop
+and make a web app that shows flavors in stock
+and allows workers to update.
+
+This is done with a REST API.
+
+The web page communicates with a cloud server
+via a REST API
+
+What is a REST API
+
+Representational
+State
+Transfer
+
+(ReST)
+
+(it's a design pattern for web apps basically)
+
+They are about communication (client-server model)
+
+a Restful service is a service that uses rest apis
+to communicate
+
+- standardized approach so everyone knows kinda what is
+happening.
+
+- standardized requests!
+
+- scalable and stateless so no strange bugs or tracking data
+
+- high performance because there is cache support
+(fetched pages can be cached by frequency)
+
+so we have an api that might look like this
+
+http://icecream/api/flavors
+
+api represents the root tree for our endpoint domain
+
+flavors here represents what is known as a resource
+
+main building blocks:
+
+Request sent from client to server
+Response received from the server
+
+CRUD stands for the actions:
+
+Create, Read, Update, Delete
+
+These actions are common in client-server communication
+
+On a REST API the equivalent to these are called HTTP methods
+or operations
+
+Create is equivalent to post
+
+Read is equivalent to get
+
+Update is put
+
+Delete is delete
+
+A request would look like an operation, an endpoint, 
+and might have some parameters or body, which are the changes
+that we might want to make (data in the request)
+
+It also includes Headers (this is particular to the REST API
+and might include API keys and authentication)
+
+What might be in a response? Responses are typically JSON
+data.
+
+Say we want to display what is currently in stock:
+
+get /api/flavors -> response returns an array of flavors.
+
+put /api/flavors/1 "chocolate" -> replace 1 with flavor
+chocolate.
+
+post api/flavors "restful raspberry" -> create new flavor.
+
+This can obviously be coupled with a nice front end so people
+don't go crazy.
+
+Spring Beginner to Guru
+
+fonte no git
+
+
+
+
+
+
+
+
+

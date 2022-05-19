@@ -1,0 +1,102 @@
+Sobre CSS (cascading style sheets)
+
+CSS é uma linguagem que complementa o HTML
+
+Em cascata?
+
+Há varios jeitos de inserir modificações no estilo com CSS
+e há uma ordem de prioridade que gera um efeito em cascata.
+Dependendo da prioridade, um estilo é carregado sobre outro.
+Isso serve para que algum estilo seja sempre exibido pelo
+navegador, pelo menos.
+
+Ordem:
+
+!important > estilo importado, definido no head, inline >
+folha de estilo do usuario > folha
+
+formas
+1. inline (style="") maior prioridade
+<div style="height:100px"></div>
+
+2. Tag 
+
+vai ser aplicada no escopo onde foi aplicada. Se for declarada
+no HEAD vai pra pagina toda. prioridade média.
+
+<style>
+
+</style>
+
+3. Importar um CSS
+
+<head>
+
+<link rel="stylesheet" type="text/css" href="style.css" >
+
+</head>
+
+sintaxe das definições de estilo:
+
+seletor {
+    declaraçãp:valor;
+}
+
+Exemplo:
+
+body {
+    font-family: Arial;
+    font-style: italic;
+}
+
+O exemplo acima é aplicado no escopo <body> </body>.
+
+Podemos ter duas que conflitam, nesse caso vale a que for
+declarada depois.
+
+O seletor pode ser uma classe, um ID ou um tag.
+
+Tag já discutido.
+
+ID: identificador unico declarado com #
+
+Classe: Apresenta um estilo a um grupo de elemento.
+Declarado com .
+
+POsition define a posição de um elemento na pagina.
+Pode ser alterada por top, left, right, bottom e pode ser
+fixada ou relativa. Pode ser relativa também a um div.
+
+Textp:
+font-family, color, font-size, font-weight, line-height
+
+Tamanho e espaçamento
+
+width e height
+
+Box model para divs
+
+div {
+    margin -> border -> padding
+
+    essas definem uma moldura (espaço antes da moldura, moldura
+    e espaço depois da moldura)
+    depois se coloca o content.
+}
+
+div {
+    margin: 10px
+    padding: 10px
+    border: 10px solid #000 -> moldura preta
+}
+
+os elementos margin podem ser declarados em par (horizontal vertical)
+ou em quarteto (sentido horario, esq->topo->dir->baixo)
+
+O seletor * dá match com tudo (regex)?
+
+Para aplicar o css em um html:
+no <head>:
+    <link rel="stylesheet"
+
+

@@ -1,0 +1,68 @@
+Spring initializer to create your project quickly (start.spring.io)
+
+Sprint-boot is a repository of common industry starter packs for a project
+(github)
+
+these are just maven POM files.
+
+This creates a fully functional base project for you to build upon in 10 clicks.
+
+(rather than having to download and cobble together the dependencies)
+
+
+JPA Model
+
+POJOs - plain old java objects objects with properties, getters
+and setters.
+
+We will also implement a data model.
+
+Remember to configure the H2 in memory database with 
+spring.h2.console.enabled=true
+spring.datasource.url=jdbc:h2:mem:testdb
+
+Spring uses the MVC design pattern as it's standard web
+app architecture.
+
+Model
+View
+Controller
+
+Created in the 70s by a xerox engineer, the primary
+advantage is that is excellent for modularization
+of responsibilities
+
+Clients send requests to the controller, which processes
+the request and obtains a model, which is sent to the view,
+then loads an appropriate view back to the client.
+
+The model that is returned by the controller upon processing
+a request should not have business logic in it, it should
+only be a POJO (data structure) for the view.
+
+The controller decides how to get the model and who to ask
+the model from. (And that's it! he's like a traffic cop)
+The controller should not be overloaded with a bunch of
+stuff like database connections
+
+The view component receives a model and renders an appropriate
+visualization of that component to the client. Thymeleaf is
+a tool that receives a model POJO and generates the html
+to show it back to the client. NO database connection on
+the view! Obtaining the appopriate data model should be done
+by the model!
+
+In spring a more sophisticated architecture is used:
+The client request goes to a dispatcher servlet
+also called front controller which patches it to 
+the handler mapping that decides which controller
+it should send this request to (we could conceivably
+have multiple controllers in a complex application).
+Then the selected controller receives the request and
+sends it to a service layer that obtains the model data
+(a POJO). This POJO model is sent back to the dispatcher
+which sends it to the appropriate view (depending on the 
+request) that will render the POJO for the client.
+
+
+
